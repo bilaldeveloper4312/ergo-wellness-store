@@ -1,4 +1,4 @@
-const API_URL = process.env.NEXT_PUBLIC_WORDPRESS_API_URL || 'https://getergowellness.com/graphql';
+const API_URL = process.env.NEXT_PUBLIC_WORDPRESS_API_URL || 'https://backend.getergowellness.com/graphql';
 
 async function fetchAPI(query: string, { variables }: { variables?: any } = {}) {
   const headers = { 'Content-Type': 'application/json' };
