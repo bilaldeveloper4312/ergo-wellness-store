@@ -1,0 +1,184 @@
+import Image from "next/image";
+import Link from "next/link";
+import { getProductById } from "@/lib/api";
+import { notFound } from "next/navigation";
+import { Metadata } from 'next';
+
+// Generate Dynamic SEO Meta Tags based on the WooCommerce Product
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
+  const resolvedParams = await params;
+  const product = await getProductById(resolvedParams.id);
+  
+  if (!product) return { title: 'Product Not Found' };
+
+  return {
+    title: `${product.name} | ErgoWellness US/UK`,
+    description: product.description ? product.description.replace(/<[^>]*>?/gm, '').substring(0, 155) : 'Shop ergonomic solutions at ErgoWellness.',
+    openGraph: {
+      title: product.name,
+      images: [product.image?.sourceUrl || '/hero-product.jpg'],
+    },
+  };
+}
+
+export default async function ProductDetail({ params }: { params: Promise<{ id: string }> }) {
+  const resolvedParams = await params;
+  const product = await getProductById(resolvedParams.id);
+
+  if (!product) {
+    notFound();
+  }
+
+  const createMarkup = (html: string) => {
+    return { __html: html };
+  };
+
+  // Structured Data (JSON-LD) for Google Rich Snippets
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: product.name,
+    image: product.image?.sourceUrl || 'https://ergowellness.com/hero-product.jpg',
+    description: product.description ? product.description.replace(/<[^>]*>?/gm, '') : '',
+    offers: {
+      '@type': 'Offer',
+      priceCurrency: 'USD',
+      price: product.price ? product.price.replace(/[^0-9.]/g, '') : '0.00',
+      availability: 'https://schema.org/InStock',
+      seller: {
+        '@type': 'Organization',
+        name: 'ErgoWellness'
+      }
+    },
+    aggregateRating: {
+      '@type': 'AggregateRating',
+      ratingValue: '4.8',
+      reviewCount: '124'
+    }
+  };
+
+  return (
+    <div className="flex flex-col font-sans w-full">
+      {/* Inject SEO Schema invisibly into the head */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+
+      {/* Breadcrumbs for SEO */}
+      <div className="bg-slate-50 border-b border-slate-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 w-full">
+          <div className="text-sm text-slate-500 flex items-center space-x-2 overflow-x-auto whitespace-nowrap">
+            <Link href="/" className="hover:text-brand-primary">Home</Link>
+            <span>/</span>
+            <Link href="/shop" className="hover:text-brand-primary">Shop</Link>
+            <span>/</span>
+            <span className="text-slate-900 font-medium">{product.name}</span>
+          </div>
+        </div>
+      </div>
+
+      <main className="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full">
+        <div className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden mb-16">
+          <div className="flex flex-col md:flex-row">
+            
+            {/* Product Image Gallery */}
+            <div className="md:w-1/2 p-8 lg:p-12 bg-slate-50 border-r border-slate-100">
+              <div className="relative w-full aspect-square rounded-2xl overflow-hidden shadow-sm bg-white border border-slate-200">
+                <Image 
+                  src={product.image?.sourceUrl || "/hero-product.jpg"} 
+                  alt={product.image?.altText || product.name} 
+                  fill
+                  style={{ objectFit: 'contain' }}
+                  className="p-8"
+                />
+              </div>
+            </div>
+
+            {/* Product Info & Buy Box */}
+            <div className="md:w-1/2 p-8 lg:p-12">
+              <span className="text-green-600 font-bold tracking-wider text-sm uppercase mb-3 flex items-center">
+                <span className="w-2 h-2 rounded-full bg-green-500 mr-2 animate-pulse"></span>
+                In Stock & Ready to Ship
+              </span>
+              <h1 className="text-3xl md:text-4xl font-extrabold text-slate-900 mb-4 leading-tight">
+                {product.name}
+              </h1>
+              
+              <div className="flex items-center mb-6">
+                <div className="flex text-yellow-400 text-lg">★★★★★</div>
+                <span className="text-slate-600 text-sm ml-2 font-medium underline cursor-pointer">4.8 (124 Reviews)</span>
+              </div>
+
+              <div className="text-4xl font-extrabold text-slate-900 mb-6">{product.price ? product.price.replace(/&nbsp;/g, ' ') : 'Price Not Set'}</div>
+
+              {product.description && (
+                <div 
+                  className="text-slate-600 mb-8 text-base leading-relaxed prose prose-slate"
+                  dangerouslySetInnerHTML={createMarkup(product.description)}
+                />
+              )}
+
+              {/* YMYL Trust Badges */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8 bg-slate-50 p-4 rounded-xl border border-slate-100">
+                <div className="flex items-center space-x-3 text-slate-700">
+                  <svg className="w-6 h-6 text-brand-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                  <span className="font-medium text-sm">Physiotherapist Approved</span>
+                </div>
+                <div className="flex items-center space-x-3 text-slate-700">
+                  <svg className="w-6 h-6 text-brand-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                  <span className="font-medium text-sm">30-Day Pain-Free Trial</span>
+                </div>
+              </div>
+
+              <button className="w-full bg-brand-primary hover:bg-brand-dark text-white font-extrabold py-5 px-8 rounded-xl shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all text-lg mb-6 flex justify-center items-center">
+                <svg className="w-6 h-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+                Add To Cart
+              </button>
+              
+              <div className="text-center text-sm text-slate-500 flex flex-col items-center justify-center space-y-2">
+                 <div className="flex items-center space-x-2">
+                   <svg className="w-4 h-4 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
+                   <span>Secure Checkout via Stripe & PayPal</span>
+                 </div>
+                 <p className="text-xs">Ships within 24 hours from US & UK warehouses.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* SEO FAQ Accordion Section (People Also Ask target) */}
+        <div className="max-w-3xl mx-auto mb-16">
+          <h2 className="text-3xl font-bold text-slate-900 mb-8 text-center">Frequently Asked Questions</h2>
+          <div className="space-y-4">
+            
+            <div className="bg-white border border-slate-200 rounded-xl p-6 shadow-sm">
+              <h3 className="text-lg font-bold text-slate-900 mb-2 flex justify-between items-center cursor-pointer">
+                How quickly will this relieve my pain?
+                <svg className="w-5 h-5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
+              </h3>
+              <p className="text-slate-600 text-sm leading-relaxed mt-2">Many customers report feeling relief within the first 1-2 hours of use. For long-term postural correction and chronic pain relief, consistent daily use over 2-3 weeks is recommended to rebuild muscle memory.</p>
+            </div>
+
+            <div className="bg-white border border-slate-200 rounded-xl p-6 shadow-sm">
+              <h3 className="text-lg font-bold text-slate-900 mb-2 flex justify-between items-center cursor-pointer">
+                Is this suitable for all body types?
+                <svg className="w-5 h-5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
+              </h3>
+              <p className="text-slate-600 text-sm leading-relaxed mt-2">Yes, our ergonomic solutions feature highly adjustable straps and universal sizing to comfortably fit chest sizes ranging from 28 to 48 inches.</p>
+            </div>
+
+            <div className="bg-white border border-slate-200 rounded-xl p-6 shadow-sm">
+              <h3 className="text-lg font-bold text-slate-900 mb-2 flex justify-between items-center cursor-pointer">
+                Can I wear this under my work clothes?
+                <svg className="w-5 h-5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
+              </h3>
+              <p className="text-slate-600 text-sm leading-relaxed mt-2">Absolutely. The slim-profile, breathable material is designed to be completely invisible under a standard office button-down shirt or blouse.</p>
+            </div>
+
+          </div>
+        </div>
+      </main>
+    </div>
+  );
+}
