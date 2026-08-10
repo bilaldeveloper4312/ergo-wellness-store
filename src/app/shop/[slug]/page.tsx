@@ -6,7 +6,7 @@ import { getProductBySlug } from "@/lib/api";
 import { notFound } from "next/navigation";
 import { Metadata } from 'next';
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 15;
 
 // Generate Dynamic SEO Meta Tags based on the WooCommerce Product
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {

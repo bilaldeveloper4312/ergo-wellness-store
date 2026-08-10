@@ -2,7 +2,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { getAllProducts } from "@/lib/api";
 
-export const dynamic = 'force-dynamic';
+// Revalidate this page every 15 seconds to keep stock/prices fresh but load instantly
+export const revalidate = 15;
 
 export default async function Home() {
   // Fetch up to 4 products for the Best Sellers section
@@ -131,15 +132,17 @@ export default async function Home() {
             </div>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {bestSellers.map((product: any) => (
+              {bestSellers.map((product: any, i: number) => (
                 <Link href={`/shop/${product.slug || product.databaseId}`} key={product.databaseId} className="group bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden hover:shadow-xl transition-all duration-300 flex flex-col h-full">
                   <div className="relative aspect-square bg-slate-50 overflow-hidden p-6 border-b border-slate-100">
                     <Image 
                       src={product.image?.sourceUrl || "/hero-product.jpg"} 
                       alt={product.image?.altText || product.name} 
                       fill
-                      style={{ objectFit: 'contain' }}
-                      className="p-4 group-hover:scale-105 transition-transform duration-500"
+                      priority={i === 0}
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+                      style={{ objectFit: 'cover' }}
+                      className="group-hover:scale-105 transition-transform duration-500"
                     />
                   </div>
                   <div className="p-5 flex flex-col flex-grow">

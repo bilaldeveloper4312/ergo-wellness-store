@@ -11,7 +11,7 @@ async function fetchAPI(query: string, { variables }: { variables?: any } = {}) 
         query,
         variables,
       }),
-      cache: 'no-store', // Disable caching to ensure fresh data (search/variations)
+      next: { revalidate: 15 }, // Blazing fast page loads, updates every 15s in background
     });
 
     const json = await res.json();

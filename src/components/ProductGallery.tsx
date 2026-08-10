@@ -23,6 +23,7 @@ export default function ProductGallery({ mainImage, altText, galleryImages }: Pr
           src={activeImage} 
           alt={altText} 
           fill
+          priority
           style={{ objectFit: 'contain' }}
           className="p-8 transition-opacity duration-300"
         />

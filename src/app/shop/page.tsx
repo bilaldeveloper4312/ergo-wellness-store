@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { getAllProducts } from "@/lib/api";
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 15;
 
 export default async function Shop({ searchParams }: { searchParams: Promise<{ q?: string }> }) {
   const resolvedParams = await searchParams;
