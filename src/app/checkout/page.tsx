@@ -133,9 +133,52 @@ export default function Checkout() {
                           });
                         }}
                         onApprove={(data, actions) => {
-                          return actions.order!.capture().then((details) => {
-                            clearCart();
-                            router.push("/checkout/success");
+                          return actions.order!.capture().then(async (details) => {
+                            setIsProcessing(true);
+                            
+                            const orderPayload = {
+                              payment_method: "paypal",
+                              payment_method_title: "PayPal",
+                              set_paid: true,
+                              transaction_id: details.id,
+                              billing: {
+                                first_name: details.payer?.name?.given_name || "",
+                                last_name: details.payer?.name?.surname || "",
+                                email: details.payer?.email_address || "",
+                                address_1: details.purchase_units?.[0]?.shipping?.address?.address_line_1 || "",
+                                address_2: details.purchase_units?.[0]?.shipping?.address?.address_line_2 || "",
+                                city: details.purchase_units?.[0]?.shipping?.address?.admin_area_2 || "",
+                                state: details.purchase_units?.[0]?.shipping?.address?.admin_area_1 || "",
+                                postcode: details.purchase_units?.[0]?.shipping?.address?.postal_code || "",
+                                country: details.purchase_units?.[0]?.shipping?.address?.country_code || "",
+                              },
+                              shipping: {
+                                first_name: details.payer?.name?.given_name || "",
+                                last_name: details.payer?.name?.surname || "",
+                                address_1: details.purchase_units?.[0]?.shipping?.address?.address_line_1 || "",
+                                address_2: details.purchase_units?.[0]?.shipping?.address?.address_line_2 || "",
+                                city: details.purchase_units?.[0]?.shipping?.address?.admin_area_2 || "",
+                                state: details.purchase_units?.[0]?.shipping?.address?.admin_area_1 || "",
+                                postcode: details.purchase_units?.[0]?.shipping?.address?.postal_code || "",
+                                country: details.purchase_units?.[0]?.shipping?.address?.country_code || "",
+                              },
+                              line_items: cartItems.map(item => ({
+                                product_id: item.productId,
+                                quantity: item.quantity
+                              }))
+                            };
+                            
+                            try {
+                              const { processCheckoutAction } = await import("@/lib/actions");
+                              await processCheckoutAction(orderPayload);
+                              clearCart();
+                              router.push("/checkout/success");
+                            } catch (error) {
+                              console.error("Order sync failed:", error);
+                              alert("Payment was successful, but order sync failed. Please contact support.");
+                              clearCart();
+                              router.push("/checkout/success");
+                            }
                           });
                         }}
                       />

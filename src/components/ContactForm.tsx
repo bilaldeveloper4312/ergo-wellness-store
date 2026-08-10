@@ -69,6 +69,7 @@ export default function ContactForm() {
       {/* Disable Captcha for smoother UX */}
       <input type="hidden" name="_captcha" value="false" />
       <input type="hidden" name="_subject" value="New Contact Form Submission - ErgoWellness" />
+      <input type="hidden" name="_autoresponse" value="Thank you for contacting ErgoWellness! We have received your message and will get back to you within 24 hours." />
 
       <div>
         <label className="block text-sm font-medium text-slate-700 mb-1">Name</label>
