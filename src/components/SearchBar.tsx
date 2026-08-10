@@ -46,7 +46,7 @@ export default function SearchBar() {
       } finally {
         setIsSearching(false);
       }
-    }, 400);
+    }, 150);
 
     return () => clearTimeout(delayDebounceFn);
   }, [query]);
