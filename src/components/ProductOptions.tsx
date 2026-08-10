@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useMemo } from "react";
+import { useCart, CartItem } from '@/context/CartContext';
 
 export default function ProductOptions({ product }: { product: any }) {
   const hasVariations = product.variations && product.variations.nodes.length > 0;
@@ -17,6 +18,7 @@ export default function ProductOptions({ product }: { product: any }) {
   }, [attributes]);
 
   const [selectedOptions, setSelectedOptions] = useState<Record<string, string>>(initialOptions);
+  const { addToCart } = useCart();
 
   const selectedVariation = useMemo(() => {
     if (!hasVariations) return null;
@@ -40,6 +42,39 @@ export default function ProductOptions({ product }: { product: any }) {
   if (selectedVariation && selectedVariation.price) {
     displayPrice = selectedVariation.price.replace(/&nbsp;/g, ' ');
   }
+
+  const handleAddToCart = () => {
+    if (hasVariations && !selectedVariation) {
+      alert("Please select all options before adding to cart.");
+      return;
+    }
+
+    const itemPrice = hasVariations ? selectedVariation.price : product.price;
+    const itemImage = product.image?.sourceUrl || "/hero-product.jpg";
+    
+    // Convert selectedOptions object into an array of {name, value}
+    const attributes = Object.keys(selectedOptions).map(key => ({
+      name: key,
+      value: selectedOptions[key]
+    }));
+
+    const cartId = hasVariations 
+      ? `${product.databaseId}-${selectedVariation.databaseId}`
+      : `${product.databaseId}`;
+
+    const cartItem: CartItem = {
+      cartId,
+      productId: product.databaseId,
+      variationId: hasVariations ? selectedVariation.databaseId : undefined,
+      name: hasVariations ? selectedVariation.name : product.name,
+      price: itemPrice,
+      image: itemImage,
+      quantity: 1,
+      attributes: hasVariations ? attributes : undefined
+    };
+
+    addToCart(cartItem);
+  };
 
   return (
     <div>
@@ -78,7 +113,10 @@ export default function ProductOptions({ product }: { product: any }) {
         </div>
       </div>
 
-      <button className="w-full bg-brand-primary hover:bg-brand-dark text-white font-extrabold py-5 px-8 rounded-xl shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all text-lg mb-6 flex justify-center items-center">
+      <button 
+        onClick={handleAddToCart}
+        className="w-full bg-brand-primary hover:bg-brand-dark text-white font-extrabold py-5 px-8 rounded-xl shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all text-lg mb-6 flex justify-center items-center"
+      >
         <svg className="w-6 h-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
         Add To Cart
       </button>
