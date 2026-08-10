@@ -33,6 +33,21 @@ export default async function ProductDetail({ params }: { params: Promise<{ id: 
     return { __html: html };
   };
 
+  // Extract images from the CJ Dropshipping description HTML
+  const imgRegex = /<img[^>]+src=["']([^"']+)["'][^>]*>/gi;
+  const galleryImages: string[] = [];
+  let match;
+  while ((match = imgRegex.exec(product.description || '')) !== null) {
+    if (match[1] && !match[1].includes('data:image')) {
+      galleryImages.push(match[1]);
+    }
+  }
+
+  // Remove all images from the description text for a clean, professional look
+  const cleanDescription = product.description 
+    ? product.description.replace(/<img[^>]*>/gi, '') 
+    : '';
+
   // Structured Data (JSON-LD) for Google Rich Snippets
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -84,7 +99,7 @@ export default async function ProductDetail({ params }: { params: Promise<{ id: 
             
             {/* Product Image Gallery */}
             <div className="md:w-1/2 p-8 lg:p-12 bg-slate-50 border-r border-slate-100">
-              <div className="relative w-full aspect-square rounded-2xl overflow-hidden shadow-sm bg-white border border-slate-200">
+              <div className="relative w-full aspect-square rounded-2xl overflow-hidden shadow-sm bg-white border border-slate-200 mb-6">
                 <Image 
                   src={product.image?.sourceUrl || "/hero-product.jpg"} 
                   alt={product.image?.altText || product.name} 
@@ -93,6 +108,18 @@ export default async function ProductDetail({ params }: { params: Promise<{ id: 
                   className="p-8"
                 />
               </div>
+
+              {/* Extracted Thumbnail Gallery */}
+              {galleryImages.length > 0 && (
+                <div className="grid grid-cols-4 gap-4">
+                  {galleryImages.slice(0, 4).map((src, idx) => (
+                    <div key={idx} className="relative aspect-square rounded-xl overflow-hidden border border-slate-200 bg-white shadow-sm hover:border-brand-primary cursor-pointer transition-colors">
+                       {/* eslint-disable-next-line @next/next/no-img-element */}
+                       <img src={src} alt={`${product.name} detail ${idx + 1}`} className="object-cover w-full h-full" />
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
 
             {/* Product Info & Buy Box */}
@@ -142,12 +169,12 @@ export default async function ProductDetail({ params }: { params: Promise<{ id: 
           </div>
           
           {/* Full-width Description Section */}
-          {product.description && (
+          {cleanDescription && cleanDescription.trim().length > 10 && (
             <div className="border-t border-slate-100 bg-white p-8 lg:p-12">
               <h2 className="text-2xl font-bold text-slate-900 mb-8">Product Details</h2>
               <div 
-                className="text-slate-600 text-base leading-relaxed prose prose-slate max-w-none w-full prose-img:rounded-xl prose-img:w-full prose-img:max-w-4xl prose-img:mx-auto"
-                dangerouslySetInnerHTML={createMarkup(product.description)}
+                className="text-slate-600 text-base leading-relaxed prose prose-slate max-w-none w-full"
+                dangerouslySetInnerHTML={createMarkup(cleanDescription)}
               />
             </div>
           )}
