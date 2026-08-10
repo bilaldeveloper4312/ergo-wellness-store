@@ -42,6 +42,7 @@ export default function CartSlideout() {
                     <div className="ml-3 flex h-7 items-center">
                       <button 
                         type="button" 
+                        aria-label="Close cart"
                         className="relative -m-2 p-2 text-slate-400 hover:text-slate-500 transition-colors"
                         onClick={() => setIsCartOpen(false)}
                       >
@@ -100,11 +101,13 @@ export default function CartSlideout() {
                                   <div className="flex items-center border border-slate-200 rounded-lg">
                                     <button 
                                       onClick={() => updateQuantity(item.cartId, item.quantity - 1)}
+                                      aria-label={`Decrease quantity of ${item.name}`}
                                       className="px-3 py-1 text-slate-500 hover:text-slate-700 hover:bg-slate-50 rounded-l-lg"
                                     >-</button>
                                     <span className="px-3 py-1 font-medium border-x border-slate-200">{item.quantity}</span>
                                     <button 
                                       onClick={() => updateQuantity(item.cartId, item.quantity + 1)}
+                                      aria-label={`Increase quantity of ${item.name}`}
                                       className="px-3 py-1 text-slate-500 hover:text-slate-700 hover:bg-slate-50 rounded-r-lg"
                                     >+</button>
                                   </div>
@@ -112,6 +115,7 @@ export default function CartSlideout() {
                                   <div className="flex">
                                     <button 
                                       type="button" 
+                                      aria-label={`Remove ${item.name} from cart`}
                                       className="font-medium text-red-500 hover:text-red-700 transition-colors text-xs uppercase tracking-wide"
                                       onClick={() => removeFromCart(item.cartId)}
                                     >

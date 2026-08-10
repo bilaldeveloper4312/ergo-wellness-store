@@ -6,7 +6,7 @@ export default function CartIcon() {
   const { cartCount, setIsCartOpen } = useCart();
 
   return (
-    <button 
+    <button aria-label="Open Cart"
       className="text-slate-700 hover:text-brand-primary relative"
       onClick={() => setIsCartOpen(true)}
     >

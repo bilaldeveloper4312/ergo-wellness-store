@@ -64,6 +64,7 @@ export default function SearchBar() {
       <form onSubmit={handleSubmit} className="relative">
         <input 
           type="text" 
+          aria-label="Search products"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           onFocus={() => {
@@ -72,7 +73,7 @@ export default function SearchBar() {
           placeholder="Search solutions..." 
           className="bg-slate-50 border border-slate-200 text-sm rounded-full pl-4 pr-10 py-2 focus:outline-none focus:ring-2 focus:ring-brand-primary focus:border-transparent w-full transition-all"
         />
-        <button type="submit" className="absolute right-3 top-2 text-slate-400 hover:text-brand-primary">
+        <button type="submit" aria-label="Submit Search" className="absolute right-3 top-2 text-slate-400 hover:text-brand-primary">
           {isSearching ? (
              <svg className="animate-spin h-5 w-5 text-brand-primary" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>

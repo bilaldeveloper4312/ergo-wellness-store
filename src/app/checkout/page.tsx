@@ -55,8 +55,8 @@ export default function Checkout() {
                   <h3 className="text-lg font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100">Contact Information</h3>
                   <div className="space-y-4">
                     <div>
-                      <label className="block text-sm font-medium text-slate-700 mb-1">Email Address</label>
-                      <input required type="email" className="w-full border border-slate-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-brand-primary focus:border-transparent outline-none" placeholder="you@example.com" />
+                      <label htmlFor="email" className="block text-sm font-medium text-slate-700 mb-1">Email Address</label>
+                      <input id="email" name="email" required type="email" className="w-full border border-slate-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-brand-primary focus:border-transparent outline-none" placeholder="you@example.com" />
                     </div>
                   </div>
                 </div>
@@ -66,32 +66,32 @@ export default function Checkout() {
                   <h3 className="text-lg font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100">Shipping Address</h3>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm font-medium text-slate-700 mb-1">First Name</label>
-                      <input required type="text" className="w-full border border-slate-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-brand-primary outline-none" />
+                      <label htmlFor="firstName" className="block text-sm font-medium text-slate-700 mb-1">First Name</label>
+                      <input id="firstName" name="firstName" required type="text" className="w-full border border-slate-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-brand-primary outline-none" />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-slate-700 mb-1">Last Name</label>
-                      <input required type="text" className="w-full border border-slate-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-brand-primary outline-none" />
+                      <label htmlFor="lastName" className="block text-sm font-medium text-slate-700 mb-1">Last Name</label>
+                      <input id="lastName" name="lastName" required type="text" className="w-full border border-slate-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-brand-primary outline-none" />
                     </div>
                     <div className="sm:col-span-2">
-                      <label className="block text-sm font-medium text-slate-700 mb-1">Address</label>
-                      <input required type="text" className="w-full border border-slate-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-brand-primary outline-none" placeholder="123 Main St" />
+                      <label htmlFor="address" className="block text-sm font-medium text-slate-700 mb-1">Address</label>
+                      <input id="address" name="address" required type="text" className="w-full border border-slate-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-brand-primary outline-none" placeholder="123 Main St" />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-slate-700 mb-1">City</label>
-                      <input required type="text" className="w-full border border-slate-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-brand-primary outline-none" />
+                      <label htmlFor="city" className="block text-sm font-medium text-slate-700 mb-1">City</label>
+                      <input id="city" name="city" required type="text" className="w-full border border-slate-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-brand-primary outline-none" />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-slate-700 mb-1">State / Province</label>
-                      <input required type="text" className="w-full border border-slate-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-brand-primary outline-none" />
+                      <label htmlFor="state" className="block text-sm font-medium text-slate-700 mb-1">State / Province</label>
+                      <input id="state" name="state" required type="text" className="w-full border border-slate-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-brand-primary outline-none" />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-slate-700 mb-1">ZIP / Postal Code</label>
-                      <input required type="text" className="w-full border border-slate-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-brand-primary outline-none" />
+                      <label htmlFor="zip" className="block text-sm font-medium text-slate-700 mb-1">ZIP / Postal Code</label>
+                      <input id="zip" name="zip" required type="text" className="w-full border border-slate-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-brand-primary outline-none" />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-slate-700 mb-1">Country</label>
-                      <select required className="w-full border border-slate-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-brand-primary outline-none bg-white">
+                      <label htmlFor="country" className="block text-sm font-medium text-slate-700 mb-1">Country</label>
+                      <select id="country" name="country" required className="w-full border border-slate-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-brand-primary outline-none bg-white">
                         <option value="US">United States</option>
                         <option value="GB">United Kingdom</option>
                         <option value="CA">Canada</option>
@@ -107,11 +107,11 @@ export default function Checkout() {
                   <h3 className="text-lg font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100">Shipping Method</h3>
                   <div className="border border-brand-primary bg-blue-50 rounded-lg p-4 flex justify-between items-center cursor-pointer">
                     <div className="flex items-center">
-                      <input type="radio" checked readOnly className="h-4 w-4 text-brand-primary focus:ring-brand-primary" />
-                      <div className="ml-3">
+                      <input id="shipping_standard" name="shipping" type="radio" checked readOnly className="h-4 w-4 text-brand-primary focus:ring-brand-primary" />
+                      <label htmlFor="shipping_standard" className="ml-3 cursor-pointer">
                         <span className="block text-sm font-bold text-slate-900">Standard Insured Shipping</span>
                         <span className="block text-xs text-slate-500">Delivery in 7-12 Business Days</span>
-                      </div>
+                      </label>
                     </div>
                     <span className="font-bold text-brand-primary">Free</span>
                   </div>
@@ -124,8 +124,8 @@ export default function Checkout() {
                     <svg className="w-8 h-8 text-slate-400 mx-auto mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" /></svg>
                     <p className="text-sm text-slate-500 mb-4">This is a demo checkout. In production, Stripe or PayPal elements will be rendered here.</p>
                     <div className="flex items-center justify-center space-x-2">
-                       <input type="radio" checked readOnly className="h-4 w-4 text-brand-primary" />
-                       <span className="text-sm font-bold text-slate-700">Cash on Delivery (Demo Mode)</span>
+                       <input id="payment_cod" name="payment" type="radio" checked readOnly className="h-4 w-4 text-brand-primary" />
+                       <label htmlFor="payment_cod" className="text-sm font-bold text-slate-700 cursor-pointer">Cash on Delivery (Demo Mode)</label>
                     </div>
                   </div>
                 </div>
