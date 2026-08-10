@@ -11,7 +11,7 @@ async function fetchAPI(query: string, { variables }: { variables?: any } = {}) 
         query,
         variables,
       }),
-      next: { revalidate: 10 }, // Revalidate every 10 seconds for ISR
+      cache: 'no-store', // Disable caching to ensure fresh data (search/variations)
     });
 
     const json = await res.json();
@@ -28,10 +28,10 @@ async function fetchAPI(query: string, { variables }: { variables?: any } = {}) 
 }
 
 // Fetch all WooCommerce products
-export async function getAllProducts() {
+export async function getAllProducts(search: string = "") {
   const data = await fetchAPI(`
-    query AllProducts {
-      products(first: 20) {
+    query AllProducts($search: String) {
+      products(first: 20, where: { search: $search }) {
         nodes {
           id
           databaseId
@@ -53,7 +53,9 @@ export async function getAllProducts() {
         }
       }
     }
-  `);
+  `, {
+    variables: { search: search || "" }
+  });
 
   return data?.products?.nodes || [];
 }
@@ -79,6 +81,27 @@ export async function getProductById(id: string) {
         ... on VariableProduct {
           price
           regularPrice
+          attributes {
+            nodes {
+              name
+              options
+            }
+          }
+          variations {
+            nodes {
+              id
+              databaseId
+              name
+              price
+              regularPrice
+              attributes {
+                nodes {
+                  name
+                  value
+                }
+              }
+            }
+          }
         }
       }
     }

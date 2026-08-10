@@ -65,9 +65,17 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </nav>
 
             <div className="flex items-center space-x-6">
-              <Link href="#" className="text-slate-500 hover:text-brand-primary">
-                 <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
-              </Link>
+              <form action="/shop" method="GET" className="relative">
+                <input 
+                  type="text" 
+                  name="q"
+                  placeholder="Search solutions..." 
+                  className="bg-slate-50 border border-slate-200 text-sm rounded-full pl-4 pr-10 py-2 focus:outline-none focus:ring-2 focus:ring-brand-primary focus:border-transparent w-48 transition-all focus:w-64"
+                />
+                <button type="submit" className="absolute right-3 top-2 text-slate-400 hover:text-brand-primary">
+                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+                </button>
+              </form>
               <button className="text-slate-700 hover:text-brand-primary relative">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />

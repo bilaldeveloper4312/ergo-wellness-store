@@ -2,6 +2,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { getAllProducts } from "@/lib/api";
 
+export const dynamic = 'force-dynamic';
+
 export default async function Home() {
   // Fetch up to 4 products for the Best Sellers section
   const allProducts = await getAllProducts();

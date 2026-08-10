@@ -2,9 +2,14 @@ import Image from "next/image";
 import Link from "next/link";
 import { getAllProducts } from "@/lib/api";
 
-export default async function Shop() {
+export const dynamic = 'force-dynamic';
+
+export default async function Shop({ searchParams }: { searchParams: Promise<{ q?: string }> }) {
+  const resolvedParams = await searchParams;
+  const searchQuery = resolvedParams.q || "";
+
   // Fetch real products from WooCommerce via GraphQL
-  const products = await getAllProducts();
+  const products = await getAllProducts(searchQuery);
 
   return (
     <div className="flex flex-col font-sans">
