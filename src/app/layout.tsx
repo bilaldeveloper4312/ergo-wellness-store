@@ -5,6 +5,7 @@ import SearchBar from "@/components/SearchBar";
 import { CartProvider } from "@/context/CartContext";
 import CartSlideout from "@/components/CartSlideout";
 import CartIcon from "@/components/CartIcon";
+import NewsletterForm from "@/components/NewsletterForm";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -125,10 +126,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <div>
                 <h4 className="text-white font-bold mb-6 tracking-wide uppercase text-sm">Get Posture Tips</h4>
                 <p className="text-sm text-slate-400 mb-4">Join 50,000+ others receiving weekly ergonomic advice.</p>
-                <div className="flex mb-8">
-                  <input type="email" placeholder="Email address" className="bg-slate-800 border-none text-sm text-white px-4 py-2 rounded-l-lg w-full focus:ring-1 focus:ring-brand-primary" />
-                  <button className="bg-brand-primary hover:bg-blue-600 text-white px-4 py-2 rounded-r-lg font-bold text-sm transition-colors">Join</button>
-                </div>
+                <NewsletterForm />
                 {/* Simulated Payment Badges */}
                 <div className="flex space-x-3 text-slate-500">
                   <div className="h-8 w-12 bg-slate-800 rounded flex items-center justify-center text-xs border border-slate-700">Visa</div>

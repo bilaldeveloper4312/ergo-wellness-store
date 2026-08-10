@@ -1,3 +1,5 @@
+import ContactForm from "@/components/ContactForm";
+
 export const metadata = {
   title: "Contact Us | ErgoWellness",
   description: "Get in touch with the ErgoWellness support team. We're here to help you live a pain-free life.",
@@ -45,27 +47,7 @@ export default function Contact() {
               </div>
               
               <div>
-                <form className="space-y-4">
-                  <div>
-                    <label className="block text-sm font-medium text-slate-700 mb-1">Name</label>
-                    <input type="text" className="w-full border border-slate-200 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-brand-primary" placeholder="John Doe" />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-slate-700 mb-1">Email</label>
-                    <input type="email" className="w-full border border-slate-200 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-brand-primary" placeholder="john@example.com" />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-slate-700 mb-1">Order Number (Optional)</label>
-                    <input type="text" className="w-full border border-slate-200 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-brand-primary" placeholder="#EW12345" />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-slate-700 mb-1">Message</label>
-                    <textarea rows={4} className="w-full border border-slate-200 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-brand-primary" placeholder="How can we help?"></textarea>
-                  </div>
-                  <button type="button" className="w-full bg-brand-primary hover:bg-brand-dark text-white font-bold py-3 px-4 rounded-lg transition-colors">
-                    Send Message
-                  </button>
-                </form>
+                <ContactForm />
               </div>
               
             </div>
