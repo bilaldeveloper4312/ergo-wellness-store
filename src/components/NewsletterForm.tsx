@@ -12,17 +12,24 @@ export default function NewsletterForm() {
     const form = e.currentTarget;
     const formData = new FormData(form);
 
-    fetch(form.action, {
+    const dataObj = Object.fromEntries(formData.entries());
+
+    fetch("https://formsubmit.co/ajax/support@getergowellness.com", {
       method: "POST",
-      body: formData,
       headers: {
+        'Content-Type': 'application/json',
         'Accept': 'application/json'
-      }
+      },
+      body: JSON.stringify(dataObj)
     })
     .then(response => response.json())
     .then(data => {
-      setStatus("success");
-      form.reset();
+      if (data.success === "true" || data.success) {
+        setStatus("success");
+        form.reset();
+      } else {
+        setStatus("idle");
+      }
     })
     .catch(error => {
       console.error(error);
