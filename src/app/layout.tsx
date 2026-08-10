@@ -50,7 +50,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </div>
 
         {/* Global Mega Menu Header */}
-        <header className="bg-white shadow-sm sticky top-0 z-50 border-b border-slate-200">
+        <header className="bg-white shadow-sm sticky top-0 z-[9999] border-b border-slate-200">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 flex justify-between items-center">
             <Link href="/" className="text-3xl font-extrabold text-brand-dark tracking-tight">Ergo<span className="text-brand-primary">Wellness</span></Link>
             

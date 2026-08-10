@@ -43,56 +43,12 @@ export default function Checkout() {
               
               <form onSubmit={(e) => e.preventDefault()} className="space-y-8">
                 
-                {/* Contact Info */}
+                {/* Instructions */}
                 <div>
-                  <h3 className="text-lg font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100">Contact Information</h3>
-                  <div className="space-y-4">
-                    <div>
-                      <label htmlFor="email" className="block text-sm font-medium text-slate-700 mb-1">Email Address</label>
-                      <input id="email" name="email" required type="email" className="w-full border border-slate-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-brand-primary focus:border-transparent outline-none" placeholder="you@example.com" />
-                    </div>
-                  </div>
-                </div>
-                
-                {/* Shipping Address */}
-                <div>
-                  <h3 className="text-lg font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100">Shipping Address</h3>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                      <label htmlFor="firstName" className="block text-sm font-medium text-slate-700 mb-1">First Name</label>
-                      <input id="firstName" name="firstName" required type="text" className="w-full border border-slate-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-brand-primary outline-none" />
-                    </div>
-                    <div>
-                      <label htmlFor="lastName" className="block text-sm font-medium text-slate-700 mb-1">Last Name</label>
-                      <input id="lastName" name="lastName" required type="text" className="w-full border border-slate-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-brand-primary outline-none" />
-                    </div>
-                    <div className="sm:col-span-2">
-                      <label htmlFor="address" className="block text-sm font-medium text-slate-700 mb-1">Address</label>
-                      <input id="address" name="address" required type="text" className="w-full border border-slate-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-brand-primary outline-none" placeholder="123 Main St" />
-                    </div>
-                    <div>
-                      <label htmlFor="city" className="block text-sm font-medium text-slate-700 mb-1">City</label>
-                      <input id="city" name="city" required type="text" className="w-full border border-slate-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-brand-primary outline-none" />
-                    </div>
-                    <div>
-                      <label htmlFor="state" className="block text-sm font-medium text-slate-700 mb-1">State / Province</label>
-                      <input id="state" name="state" required type="text" className="w-full border border-slate-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-brand-primary outline-none" />
-                    </div>
-                    <div>
-                      <label htmlFor="zip" className="block text-sm font-medium text-slate-700 mb-1">ZIP / Postal Code</label>
-                      <input id="zip" name="zip" required type="text" className="w-full border border-slate-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-brand-primary outline-none" />
-                    </div>
-                    <div>
-                      <label htmlFor="country" className="block text-sm font-medium text-slate-700 mb-1">Country</label>
-                      <select id="country" name="country" required className="w-full border border-slate-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-brand-primary outline-none bg-white">
-                        <option value="US">United States</option>
-                        <option value="GB">United Kingdom</option>
-                        <option value="CA">Canada</option>
-                        <option value="AU">Australia</option>
-                        <option value="AE">United Arab Emirates</option>
-                      </select>
-                    </div>
-                  </div>
+                  <h3 className="text-lg font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100">Express Checkout</h3>
+                  <p className="text-slate-600 mb-4">
+                    Complete your purchase securely with PayPal. Your shipping address and contact details will be automatically collected during the PayPal checkout process.
+                  </p>
                 </div>
 
                 {/* Shipping Method */}
