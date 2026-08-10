@@ -46,6 +46,10 @@ export async function getAllProducts() {
             price
             regularPrice
           }
+          ... on VariableProduct {
+            price
+            regularPrice
+          }
         }
       }
     }
@@ -69,6 +73,10 @@ export async function getProductById(id: string) {
           altText
         }
         ... on SimpleProduct {
+          price
+          regularPrice
+        }
+        ... on VariableProduct {
           price
           regularPrice
         }

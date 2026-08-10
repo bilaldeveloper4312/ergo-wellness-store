@@ -112,12 +112,7 @@ export default async function ProductDetail({ params }: { params: Promise<{ id: 
 
               <div className="text-4xl font-extrabold text-slate-900 mb-6">{product.price ? product.price.replace(/&nbsp;/g, ' ') : 'Price Not Set'}</div>
 
-              {product.description && (
-                <div 
-                  className="text-slate-600 mb-8 text-base leading-relaxed prose prose-slate"
-                  dangerouslySetInnerHTML={createMarkup(product.description)}
-                />
-              )}
+
 
               {/* YMYL Trust Badges */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8 bg-slate-50 p-4 rounded-xl border border-slate-100">
@@ -145,6 +140,17 @@ export default async function ProductDetail({ params }: { params: Promise<{ id: 
               </div>
             </div>
           </div>
+          
+          {/* Full-width Description Section */}
+          {product.description && (
+            <div className="border-t border-slate-100 bg-white p-8 lg:p-12">
+              <h2 className="text-2xl font-bold text-slate-900 mb-8">Product Details</h2>
+              <div 
+                className="text-slate-600 text-base leading-relaxed prose prose-slate max-w-none w-full prose-img:rounded-xl prose-img:w-full prose-img:max-w-4xl prose-img:mx-auto"
+                dangerouslySetInnerHTML={createMarkup(product.description)}
+              />
+            </div>
+          )}
         </div>
 
         {/* SEO FAQ Accordion Section (People Also Ask target) */}
