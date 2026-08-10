@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import ProductGallery from "@/components/ProductGallery";
 import ProductOptions from "@/components/ProductOptions";
+import ProductReviews from "@/components/ProductReviews";
 import { getProductBySlug } from "@/lib/api";
 import { notFound } from "next/navigation";
 import { Metadata } from 'next';
@@ -137,6 +138,11 @@ export default async function ProductDetail({ params }: { params: Promise<{ slug
               />
             </div>
           )}
+        </div>
+
+          {/* Product Reviews Section */}
+          <div className="mt-16">
+            <ProductReviews />
         </div>
 
         {/* SEO FAQ Accordion Section (People Also Ask target) */}
