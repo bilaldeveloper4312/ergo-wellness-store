@@ -114,11 +114,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <div>
                 <h4 className="text-white font-bold mb-6 tracking-wide uppercase text-sm">Customer Support</h4>
                 <ul className="space-y-3 text-sm text-slate-400">
-                  <li><Link href="#" className="hover:text-brand-primary transition-colors">Contact Us</Link></li>
-                  <li><Link href="#" className="hover:text-brand-primary transition-colors">Track My Order</Link></li>
-                  <li><Link href="#" className="hover:text-brand-primary transition-colors flex items-center">US Shipping Policy <span className="ml-2">🇺🇸</span></Link></li>
-                  <li><Link href="#" className="hover:text-brand-primary transition-colors flex items-center">UK Shipping Policy <span className="ml-2">🇬🇧</span></Link></li>
-                  <li><Link href="#" className="hover:text-brand-primary transition-colors">30-Day Returns</Link></li>
+                  <li><Link href="/contact" className="hover:text-brand-primary transition-colors">Contact Us</Link></li>
+                  <li><Link href="/track-order" className="hover:text-brand-primary transition-colors">Track My Order</Link></li>
+                  <li><Link href="/shipping" className="hover:text-brand-primary transition-colors flex items-center">Shipping Policy</Link></li>
+                  <li><Link href="/returns" className="hover:text-brand-primary transition-colors">30-Day Returns</Link></li>
                 </ul>
               </div>
 
@@ -144,8 +143,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <div className="border-t border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-slate-500">
               <p>&copy; {new Date().getFullYear()} ErgoWellness Inc. All rights reserved.</p>
               <div className="flex space-x-4 mt-4 md:mt-0">
-                <Link href="#" className="hover:text-white">Privacy Policy</Link>
-                <Link href="#" className="hover:text-white">Terms of Service</Link>
+                <Link href="/privacy" className="hover:text-white">Privacy Policy</Link>
+                <Link href="/terms" className="hover:text-white">Terms of Service</Link>
               </div>
             </div>
           </div>
