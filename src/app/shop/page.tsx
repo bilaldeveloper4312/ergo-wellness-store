@@ -46,7 +46,7 @@ export default async function Shop({ searchParams }: { searchParams: Promise<{ q
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {products.map((product: any) => (
-              <Link href={`/shop/${product.databaseId}`} key={product.databaseId} className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden hover:shadow-xl transition-shadow duration-300 group block">
+              <Link href={`/shop/${product.slug || product.databaseId}`} key={product.databaseId} className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden hover:shadow-xl transition-shadow duration-300 group block">
                 <div className="relative aspect-square bg-slate-100 overflow-hidden">
                   <Image 
                     src={product.image?.sourceUrl || "/hero-product.jpg"} 

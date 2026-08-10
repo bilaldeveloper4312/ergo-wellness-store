@@ -2,16 +2,16 @@ import Image from "next/image";
 import Link from "next/link";
 import ProductGallery from "@/components/ProductGallery";
 import ProductOptions from "@/components/ProductOptions";
-import { getProductById } from "@/lib/api";
+import { getProductBySlug } from "@/lib/api";
 import { notFound } from "next/navigation";
 import { Metadata } from 'next';
 
 export const dynamic = 'force-dynamic';
 
 // Generate Dynamic SEO Meta Tags based on the WooCommerce Product
-export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const resolvedParams = await params;
-  const product = await getProductById(resolvedParams.id);
+  const product = await getProductBySlug(resolvedParams.slug);
   
   if (!product) return { title: 'Product Not Found' };
 
@@ -25,9 +25,9 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
   };
 }
 
-export default async function ProductDetail({ params }: { params: Promise<{ id: string }> }) {
+export default async function ProductDetail({ params }: { params: Promise<{ slug: string }> }) {
   const resolvedParams = await params;
-  const product = await getProductById(resolvedParams.id);
+  const product = await getProductBySlug(resolvedParams.slug);
 
   if (!product) {
     notFound();

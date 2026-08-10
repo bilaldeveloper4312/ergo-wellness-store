@@ -67,7 +67,8 @@ export default function ProductOptions({ product }: { product: any }) {
       productId: product.databaseId,
       variationId: hasVariations ? selectedVariation.databaseId : undefined,
       name: hasVariations ? selectedVariation.name : product.name,
-      price: itemPrice,
+      slug: product.slug,
+      price: itemPrice ? itemPrice.replace(/&nbsp;/g, ' ') : '',
       image: itemImage,
       quantity: 1,
       attributes: hasVariations ? attributes : undefined

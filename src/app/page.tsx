@@ -132,7 +132,7 @@ export default async function Home() {
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {bestSellers.map((product: any) => (
-                <Link href={`/shop/${product.databaseId}`} key={product.databaseId} className="group bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden hover:shadow-xl transition-all duration-300 flex flex-col h-full">
+                <Link href={`/shop/${product.slug || product.databaseId}`} key={product.databaseId} className="group bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden hover:shadow-xl transition-all duration-300 flex flex-col h-full">
                   <div className="relative aspect-square bg-slate-50 overflow-hidden p-6 border-b border-slate-100">
                     <Image 
                       src={product.image?.sourceUrl || "/hero-product.jpg"} 

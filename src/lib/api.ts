@@ -60,11 +60,11 @@ export async function getAllProducts(search: string = "") {
   return data?.products?.nodes || [];
 }
 
-// Fetch a single product by ID (databaseId)
-export async function getProductById(id: string) {
+// Fetch a single product by slug
+export async function getProductBySlug(slug: string) {
   const data = await fetchAPI(`
     query GetProduct($id: ID!) {
-      product(id: $id, idType: DATABASE_ID) {
+      product(id: $id, idType: SLUG) {
         id
         databaseId
         name
@@ -107,7 +107,7 @@ export async function getProductById(id: string) {
     }
   `, {
     variables: {
-      id: id
+      id: slug
     }
   });
 

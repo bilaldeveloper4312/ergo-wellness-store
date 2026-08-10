@@ -91,7 +91,7 @@ export default function SearchBar() {
             {results.slice(0, 5).map((product) => (
               <li key={product.databaseId} className="border-b border-slate-50 last:border-0">
                 <Link 
-                  href={`/shop/${product.databaseId}`}
+                  href={`/shop/${product.slug || product.databaseId}`}
                   onClick={() => setIsOpen(false)}
                   className="flex items-center p-3 hover:bg-slate-50 transition-colors"
                 >

@@ -86,9 +86,9 @@ export default function CartSlideout() {
                                 <div>
                                   <div className="flex justify-between text-base font-medium text-slate-900">
                                     <h3 className="line-clamp-2 text-sm font-bold pr-4">
-                                      <Link href={`/shop/${item.productId}`} onClick={() => setIsCartOpen(false)}>{item.name}</Link>
+                                      <Link href={`/shop/${item.slug || item.productId}`} onClick={() => setIsCartOpen(false)}>{item.name}</Link>
                                     </h3>
-                                    <p className="ml-4 font-extrabold whitespace-nowrap">{item.price}</p>
+                                    <p className="ml-4 font-extrabold whitespace-nowrap">{item.price ? item.price.replace(/&nbsp;/g, ' ') : ''}</p>
                                   </div>
                                   {item.attributes && item.attributes.length > 0 && (
                                     <p className="mt-1 text-xs text-slate-500">

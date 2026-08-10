@@ -170,7 +170,7 @@ export default function Checkout() {
                       )}
                     </div>
                     <div className="ml-4 flex items-center">
-                      <p className="text-sm font-bold text-slate-900">{item.price}</p>
+                      <p className="text-sm font-bold text-slate-900">{item.price ? item.price.replace(/&nbsp;/g, ' ') : ''}</p>
                     </div>
                   </li>
                 ))}
