@@ -40,8 +40,7 @@ export default function ProductGallery({ mainImage, altText, galleryImages }: Pr
                 activeImage === src ? 'border-brand-primary opacity-100 ring-2 ring-brand-primary/20' : 'border-slate-200 opacity-60 hover:opacity-100'
               }`}
             >
-               {/* eslint-disable-next-line @next/next/no-img-element */}
-               <img src={src} alt={`Thumbnail ${idx + 1}`} className="object-cover w-full h-full bg-white" />
+               <Image src={src} alt={`Thumbnail ${idx + 1}`} fill style={{ objectFit: 'cover' }} className="bg-white" sizes="100px" />
             </div>
           ))}
         </div>

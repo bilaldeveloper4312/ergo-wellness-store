@@ -4,10 +4,14 @@ const nextConfig: NextConfig = {
   images: {
     formats: ['image/avif', 'image/webp'],
     remotePatterns: [
-      { protocol: 'https', hostname: 'backend.getergowellness.com' },
-      { protocol: 'http', hostname: 'backend.getergowellness.com' },
-      { protocol: 'https', hostname: '**.aliyuncs.com' },
-      { protocol: 'https', hostname: '**.cjdropshipping.com' },
+      {
+        protocol: 'https',
+        hostname: '**',
+      },
+      {
+        protocol: 'http',
+        hostname: '**',
+      }
     ],
   },
 };
