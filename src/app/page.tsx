@@ -58,6 +58,8 @@ export default async function Home() {
                  src="/hero-product.jpg" 
                  alt="Premium Posture Corrector" 
                  fill
+                 priority
+                 sizes="(max-width: 1024px) 100vw, 50vw"
                  style={{ objectFit: 'cover' }}
                  className="hover:scale-105 transition-transform duration-700"
                />
