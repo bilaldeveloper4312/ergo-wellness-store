@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 
 export default function Checkout() {
   const { cartItems, cartTotal, clearCart } = useCart();
@@ -13,14 +14,6 @@ export default function Checkout() {
 
   const handleCheckout = (e: React.FormEvent) => {
     e.preventDefault();
-    setIsProcessing(true);
-    
-    // Simulate API call to backend
-    setTimeout(() => {
-      setIsProcessing(false);
-      clearCart();
-      router.push("/checkout/success");
-    }, 2000);
   };
 
   if (cartItems.length === 0 && !isProcessing) {
@@ -48,7 +41,7 @@ export default function Checkout() {
             <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-8">
               <h2 className="text-2xl font-bold text-slate-900 mb-6">Checkout</h2>
               
-              <form onSubmit={handleCheckout} className="space-y-8">
+              <form onSubmit={(e) => e.preventDefault()} className="space-y-8">
                 
                 {/* Contact Info */}
                 <div>
@@ -120,25 +113,35 @@ export default function Checkout() {
                 {/* Payment */}
                 <div>
                   <h3 className="text-lg font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100">Payment</h3>
-                  <div className="bg-slate-50 border border-slate-200 rounded-lg p-6 text-center">
-                    <svg className="w-8 h-8 text-slate-400 mx-auto mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" /></svg>
-                    <p className="text-sm text-slate-500 mb-4">This is a demo checkout. In production, Stripe or PayPal elements will be rendered here.</p>
-                    <div className="flex items-center justify-center space-x-2">
-                       <input id="payment_cod" name="payment" type="radio" checked readOnly className="h-4 w-4 text-brand-primary" />
-                       <label htmlFor="payment_cod" className="text-sm font-bold text-slate-700 cursor-pointer">Cash on Delivery (Demo Mode)</label>
-                    </div>
+                  <div className="bg-slate-50 border border-slate-200 rounded-lg p-6">
+                    <PayPalScriptProvider options={{ clientId: "AeSkVTYSh4pDg6gRIB4g5dBpdfN4HJ9eKYY3ud55mHCeSnUlhG_FGaGdalbzS-W99cS8N_-DaxRaq1QS", currency: "USD" }}>
+                      <PayPalButtons 
+                        style={{ layout: "vertical", shape: "rect", color: "gold" }}
+                        createOrder={(data, actions) => {
+                          // Note: PayPal doesn't natively support AED, so we convert the cart total to USD (approx 3.67 AED per 1 USD)
+                          const totalUsd = (cartTotal / 3.67).toFixed(2);
+                          return actions.order.create({
+                            intent: "CAPTURE",
+                            purchase_units: [
+                              {
+                                amount: {
+                                  currency_code: "USD",
+                                  value: totalUsd,
+                                },
+                              },
+                            ],
+                          });
+                        }}
+                        onApprove={(data, actions) => {
+                          return actions.order!.capture().then((details) => {
+                            clearCart();
+                            router.push("/checkout/success");
+                          });
+                        }}
+                      />
+                    </PayPalScriptProvider>
                   </div>
                 </div>
-
-                <button 
-                  type="submit" 
-                  disabled={isProcessing}
-                  className="w-full bg-brand-primary hover:bg-brand-dark text-white font-extrabold py-4 px-8 rounded-xl shadow-xl transition-all text-lg flex justify-center items-center disabled:opacity-70"
-                >
-                  {isProcessing ? (
-                     <><svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Processing...</>
-                  ) : `Pay ${cartTotal.toFixed(2)} د.إ`}
-                </button>
                 
                 <div className="flex items-center justify-center space-x-2 text-xs text-slate-500 mt-4">
                   <svg className="w-4 h-4 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
