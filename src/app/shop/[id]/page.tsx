@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import ProductGallery from "@/components/ProductGallery";
 import { getProductById } from "@/lib/api";
 import { notFound } from "next/navigation";
 import { Metadata } from 'next';
@@ -97,30 +98,12 @@ export default async function ProductDetail({ params }: { params: Promise<{ id: 
         <div className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden mb-16">
           <div className="flex flex-col md:flex-row">
             
-            {/* Product Image Gallery */}
-            <div className="md:w-1/2 p-8 lg:p-12 bg-slate-50 border-r border-slate-100">
-              <div className="relative w-full aspect-square rounded-2xl overflow-hidden shadow-sm bg-white border border-slate-200 mb-6">
-                <Image 
-                  src={product.image?.sourceUrl || "/hero-product.jpg"} 
-                  alt={product.image?.altText || product.name} 
-                  fill
-                  style={{ objectFit: 'contain' }}
-                  className="p-8"
-                />
-              </div>
-
-              {/* Extracted Thumbnail Gallery */}
-              {galleryImages.length > 0 && (
-                <div className="grid grid-cols-4 gap-4">
-                  {galleryImages.slice(0, 4).map((src, idx) => (
-                    <div key={idx} className="relative aspect-square rounded-xl overflow-hidden border border-slate-200 bg-white shadow-sm hover:border-brand-primary cursor-pointer transition-colors">
-                       {/* eslint-disable-next-line @next/next/no-img-element */}
-                       <img src={src} alt={`${product.name} detail ${idx + 1}`} className="object-cover w-full h-full" />
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
+            {/* Interactive Product Image Gallery */}
+            <ProductGallery 
+              mainImage={product.image?.sourceUrl || "/hero-product.jpg"} 
+              altText={product.image?.altText || product.name} 
+              galleryImages={galleryImages} 
+            />
 
             {/* Product Info & Buy Box */}
             <div className="md:w-1/2 p-8 lg:p-12">
