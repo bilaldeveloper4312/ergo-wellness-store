@@ -70,7 +70,7 @@ export default function Checkout() {
                 <div>
                   <h3 className="text-lg font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100">Payment</h3>
                   <div className="bg-slate-50 border border-slate-200 rounded-lg p-6">
-                    <PayPalScriptProvider options={{ clientId: "AeSkVTYSh4pDg6gRIB4g5dBpdfN4HJ9eKYY3ud55mHCeSnUlhG_FGaGdalbzS-W99cS8N_-DaxRaq1QS", currency: "USD" }}>
+                    <PayPalScriptProvider options={{ clientId: "BAAj6U3OpYjbcJ7SL1C0Xc--NDOpfFbw8VojfUcgOf8hei_D2rThqVV0tls9uuMZuyvcgobJ7ZJ8MD_MCU", currency: "USD" }}>
                       <PayPalButtons 
                         style={{ layout: "vertical", shape: "rect", color: "gold" }}
                         createOrder={(data, actions) => {
