@@ -23,7 +23,7 @@ export default function CartSlideout() {
   if (!isCartOpen) return null;
 
   return (
-    <div className="relative z-[100]" aria-labelledby="slide-over-title" role="dialog" aria-modal="true">
+    <div className="relative z-[10000]" aria-labelledby="slide-over-title" role="dialog" aria-modal="true">
       {/* Background overlay */}
       <div 
         className="fixed inset-0 bg-slate-900/75 transition-opacity backdrop-blur-sm" 
