@@ -1,3 +1,4 @@
+import https from "https";
 import WooCommerceRestApi from "@woocommerce/woocommerce-rest-api";
 
 const WC_CONSUMER_KEY = process.env.WC_CONSUMER_KEY || '';
@@ -10,11 +11,14 @@ export async function createOrderInWooCommerce(orderData: any) {
   }
 
   const api = new WooCommerceRestApi({
-    url: "http://backend.getergowellness.com",
+    url: "https://backend.getergowellness.com",
     consumerKey: WC_CONSUMER_KEY,
     consumerSecret: WC_CONSUMER_SECRET,
     version: "wc/v3",
-    queryStringAuth: true 
+    queryStringAuth: true,
+    axiosConfig: {
+      httpsAgent: new https.Agent({ rejectUnauthorized: false })
+    }
   });
 
   try {
