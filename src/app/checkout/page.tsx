@@ -30,6 +30,21 @@ export default function Checkout() {
     );
   }
 
+  if (isProcessing) {
+    return (
+      <div className="bg-slate-50 min-h-screen flex flex-col items-center justify-center p-4 z-50 fixed inset-0">
+        <div className="bg-white p-10 rounded-2xl shadow-xl flex flex-col items-center max-w-md text-center">
+          <div className="relative w-20 h-20 mb-6">
+            <div className="absolute inset-0 border-4 border-slate-100 rounded-full"></div>
+            <div className="absolute inset-0 border-4 border-brand-primary rounded-full border-t-transparent animate-spin"></div>
+          </div>
+          <h2 className="text-2xl font-bold text-slate-900 mb-2">Processing Payment...</h2>
+          <p className="text-slate-500">Please wait while we secure your order. This may take a few seconds. Do not close this window.</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="bg-slate-50 min-h-screen py-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
