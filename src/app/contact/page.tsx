@@ -1,5 +1,5 @@
 import ContactForm from "@/components/ContactForm";
-
+import { Suspense } from "react";
 export const metadata = {
   title: "Contact Us | ErgoWellness",
   description: "Get in touch with the ErgoWellness support team. We're here to help you live a pain-free life.",
@@ -47,7 +47,9 @@ export default function Contact() {
               </div>
               
               <div>
-                <ContactForm />
+                <Suspense fallback={<div className="p-8 text-center text-slate-500">Loading form...</div>}>
+                  <ContactForm />
+                </Suspense>
               </div>
               
             </div>
