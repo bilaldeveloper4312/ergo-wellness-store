@@ -38,16 +38,23 @@ export async function submitContactForm(data: {
       })
     });
 
-    const formSubmitData = await formSubmitRes.json();
-
-    if (formSubmitData.success === "true" || formSubmitData.success) {
-      return { success: true };
+    const contentType = formSubmitRes.headers.get("content-type");
+    if (contentType && contentType.indexOf("application/json") !== -1) {
+      const formSubmitData = await formSubmitRes.json();
+      if (formSubmitData.success === "true" || formSubmitData.success) {
+        return { success: true };
+      } else {
+        return { success: false, error: "Failed to send message to FormSubmit." };
+      }
     } else {
-      return { success: false, error: "Failed to send message to FormSubmit." };
+      // FormSubmit returned HTML. This usually means the email needs to be activated.
+      const htmlText = await formSubmitRes.text();
+      console.error("FormSubmit returned HTML instead of JSON. Likely needs activation.", htmlText.substring(0, 200));
+      return { success: false, error: "System pending activation. Please check the support@getergowellness.com inbox for an activation email from FormSubmit." };
     }
 
   } catch (error) {
     console.error("Error submitting contact form:", error);
-    return { success: false, error: "Server error occurred." };
+    return { success: false, error: "Server error occurred. Please try again later." };
   }
 }
