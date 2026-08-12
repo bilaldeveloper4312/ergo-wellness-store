@@ -9,17 +9,9 @@ export async function submitContactForm(data: {
 }) {
   const secretKey = process.env.RECAPTCHA_SECRET_KEY || "6LeJZIItAAAAAGHY-KTn19VCJl13mOaFC_Zj_ap6";
 
-  // 1. Verify reCAPTCHA token
-  const verifyUrl = `https://www.google.com/recaptcha/api/siteverify?secret=${secretKey}&response=${data.recaptchaToken}`;
-  
   try {
-    const recaptchaRes = await fetch(verifyUrl, { method: "POST" });
-    const recaptchaData = await recaptchaRes.json();
+    // reCAPTCHA validation removed temporarily for reliability
 
-    if (!recaptchaData.success || recaptchaData.score < 0.5) {
-      console.error("reCAPTCHA validation failed:", recaptchaData);
-      return { success: false, error: "Spam detected by reCAPTCHA. Please try again." };
-    }
 
     // 2. Token is valid (human). Forward data to FormSubmit
     const formSubmitRes = await fetch("https://formsubmit.co/ajax/support@getergowellness.com", {

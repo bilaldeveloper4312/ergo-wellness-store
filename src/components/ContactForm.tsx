@@ -1,28 +1,18 @@
 "use client";
 
 import { useState } from "react";
-import { GoogleReCaptchaProvider, useGoogleReCaptcha } from "react-google-recaptcha-v3";
 import { submitContactForm } from "@/app/actions/contact";
 
-function ContactFormInner() {
+export default function ContactForm() {
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const [errorMessage, setErrorMessage] = useState("");
-  const { executeRecaptcha } = useGoogleReCaptcha();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     
-    if (!executeRecaptcha) {
-      console.log("Execute recaptcha not yet available");
-      return;
-    }
-
     setStatus("submitting");
 
     try {
-      // 1. Get reCAPTCHA token
-      const token = await executeRecaptcha("contact_form");
-
       const form = e.currentTarget;
       const formData = new FormData(form);
 
@@ -31,7 +21,7 @@ function ContactFormInner() {
         email: formData.get("email") as string,
         order_number: formData.get("order_number") as string,
         message: formData.get("message") as string,
-        recaptchaToken: token,
+        recaptchaToken: "disabled", // reCAPTCHA removed for reliability
       };
 
       // 2. Call Server Action
@@ -44,10 +34,10 @@ function ContactFormInner() {
         setStatus("error");
         setErrorMessage(result.error || "An error occurred.");
       }
-    } catch (error) {
-      console.error(error);
+    } catch (error: any) {
+      console.error("Form submission error:", error);
       setStatus("error");
-      setErrorMessage("An unexpected error occurred.");
+      setErrorMessage(`Error: ${error.message || "An unexpected error occurred."}`);
     }
   };
 
@@ -95,7 +85,7 @@ function ContactFormInner() {
       </div>
       <button 
         type="submit" 
-        disabled={status === "submitting" || !executeRecaptcha}
+        disabled={status === "submitting"}
         className="w-full bg-brand-primary hover:bg-brand-dark text-white font-bold py-3 px-4 rounded-lg transition-colors disabled:opacity-50 flex justify-center items-center"
       >
         {status === "submitting" ? (
@@ -109,18 +99,8 @@ function ContactFormInner() {
       </button>
       
       <div className="text-xs text-center text-slate-500 mt-4">
-        This site is protected by reCAPTCHA and the Google 
-        <a href="https://policies.google.com/privacy" className="text-brand-primary hover:underline ml-1">Privacy Policy</a> and 
-        <a href="https://policies.google.com/terms" className="text-brand-primary hover:underline ml-1">Terms of Service</a> apply.
+        We aim to reply within 24 hours.
       </div>
     </form>
-  );
-}
-
-export default function ContactForm() {
-  return (
-    <GoogleReCaptchaProvider reCaptchaKey="6LeJZIItAAAAAPG51ziS0JBmF_bfAQb1UC26qfQn">
-      <ContactFormInner />
-    </GoogleReCaptchaProvider>
   );
 }
