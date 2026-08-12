@@ -19,8 +19,31 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://www.getergowellness.com'),
   title: "ErgoWellness | Premium Posture & Ergonomic Solutions",
-  description: "Doctor-recommended ergonomic desk accessories and posture correctors designed to relieve back and neck pain.",
+  description: "Doctor-recommended ergonomic desk accessories and posture correctors designed to relieve back and neck pain. Shop now with free shipping in US & UK.",
+  keywords: ["posture corrector", "ergonomic chair", "neck pain relief", "standing desk", "ergonomic accessories", "back pain support"],
+  openGraph: {
+    title: "ErgoWellness | Premium Posture & Ergonomic Solutions",
+    description: "Doctor-recommended ergonomic desk accessories and posture correctors designed to relieve back and neck pain.",
+    url: "https://www.getergowellness.com",
+    siteName: "ErgoWellness",
+    images: [
+      {
+        url: "/images/og-image.jpg", // We will use a placeholder or they can upload one later
+        width: 1200,
+        height: 630,
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "ErgoWellness | Premium Posture & Ergonomic Solutions",
+    description: "Doctor-recommended ergonomic desk accessories and posture correctors.",
+    creator: "@ErgoWellness",
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
