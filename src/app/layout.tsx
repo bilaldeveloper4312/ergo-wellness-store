@@ -6,6 +6,7 @@ import { CartProvider } from "@/context/CartContext";
 import CartSlideout from "@/components/CartSlideout";
 import CartIcon from "@/components/CartIcon";
 import NewsletterForm from "@/components/NewsletterForm";
+import { GoogleAnalytics } from '@next/third-parties/google';
 import "./globals.css";
 
 const geistSans = Geist({
@@ -172,6 +173,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </footer>
         </CartProvider>
       </body>
+      <GoogleAnalytics gaId="G-N0QFDL993K" />
     </html>
   );
 }
