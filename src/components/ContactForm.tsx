@@ -1,42 +1,54 @@
 "use client";
 
 import { useState } from "react";
+import { GoogleReCaptchaProvider, useGoogleReCaptcha } from "react-google-recaptcha-v3";
+import { submitContactForm } from "@/app/actions/contact";
 
-export default function ContactForm() {
-  const [status, setStatus] = useState<"idle" | "submitting" | "success">("idle");
+function ContactFormInner() {
+  const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
+  const [errorMessage, setErrorMessage] = useState("");
+  const { executeRecaptcha } = useGoogleReCaptcha();
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    // We will let the native form submission handle it to redirect to formsubmit.co's thank you page,
-    // OR we can do an AJAX submit. FormSubmit supports AJAX!
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    
+    if (!executeRecaptcha) {
+      console.log("Execute recaptcha not yet available");
+      return;
+    }
+
     setStatus("submitting");
 
-    const form = e.currentTarget;
-    const formData = new FormData(form);
+    try {
+      // 1. Get reCAPTCHA token
+      const token = await executeRecaptcha("contact_form");
 
-    const dataObj = Object.fromEntries(formData.entries());
+      const form = e.currentTarget;
+      const formData = new FormData(form);
 
-    fetch("https://formsubmit.co/ajax/5ef7a388329abf3bffad11cc18e49b8f", {
-      method: "POST",
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      },
-      body: JSON.stringify(dataObj)
-    })
-    .then(response => response.json())
-    .then(data => {
-      if (data.success === "true" || data.success) {
+      const dataObj = {
+        name: formData.get("name") as string,
+        email: formData.get("email") as string,
+        order_number: formData.get("order_number") as string,
+        message: formData.get("message") as string,
+        recaptchaToken: token,
+      };
+
+      // 2. Call Server Action
+      const result = await submitContactForm(dataObj);
+
+      if (result.success) {
         setStatus("success");
         form.reset();
       } else {
-        setStatus("idle");
+        setStatus("error");
+        setErrorMessage(result.error || "An error occurred.");
       }
-    })
-    .catch(error => {
+    } catch (error) {
       console.error(error);
-      setStatus("idle");
-    });
+      setStatus("error");
+      setErrorMessage("An unexpected error occurred.");
+    }
   };
 
   if (status === "success") {
@@ -58,18 +70,12 @@ export default function ContactForm() {
   }
 
   return (
-    <form 
-      action="https://formsubmit.co/support@getergowellness.com" 
-      method="POST" 
-      onSubmit={handleSubmit}
-      className="space-y-4"
-    >
-      {/* Honeypot to prevent spam */}
-      <input type="text" name="_honey" style={{ display: "none" }} />
-      {/* Disable Captcha for smoother UX */}
-      <input type="hidden" name="_captcha" value="false" />
-      <input type="hidden" name="_subject" value="New Contact Form Submission - ErgoWellness" />
-      <input type="hidden" name="_autoresponse" value="Thank you for contacting ErgoWellness! We have received your message and will get back to you within 24 hours." />
+    <form onSubmit={handleSubmit} className="space-y-4">
+      {status === "error" && (
+        <div className="bg-red-50 text-red-600 p-4 rounded-lg text-sm border border-red-200">
+          {errorMessage}
+        </div>
+      )}
 
       <div>
         <label className="block text-sm font-medium text-slate-700 mb-1">Name</label>
@@ -89,7 +95,7 @@ export default function ContactForm() {
       </div>
       <button 
         type="submit" 
-        disabled={status === "submitting"}
+        disabled={status === "submitting" || !executeRecaptcha}
         className="w-full bg-brand-primary hover:bg-brand-dark text-white font-bold py-3 px-4 rounded-lg transition-colors disabled:opacity-50 flex justify-center items-center"
       >
         {status === "submitting" ? (
@@ -101,6 +107,20 @@ export default function ContactForm() {
           "Send Message"
         )}
       </button>
+      
+      <div className="text-xs text-center text-slate-500 mt-4">
+        This site is protected by reCAPTCHA and the Google 
+        <a href="https://policies.google.com/privacy" className="text-brand-primary hover:underline ml-1">Privacy Policy</a> and 
+        <a href="https://policies.google.com/terms" className="text-brand-primary hover:underline ml-1">Terms of Service</a> apply.
+      </div>
     </form>
+  );
+}
+
+export default function ContactForm() {
+  return (
+    <GoogleReCaptchaProvider reCaptchaKey="6LeJZIItAAAAAPG51ziS0JBmF_bfAQb1UC26qfQn">
+      <ContactFormInner />
+    </GoogleReCaptchaProvider>
   );
 }
