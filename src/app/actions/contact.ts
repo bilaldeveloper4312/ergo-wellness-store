@@ -14,8 +14,11 @@ export async function submitContactForm(data: {
 
 
     // 2. Token is valid (human). Forward data to FormSubmit
-    const formSubmitRes = await fetch("https://formsubmit.co/ajax/support@getergowellness.com", {
+    // Added timestamp and no-store to bypass aggressive Next.js caching of the activation error
+    const timestamp = Date.now();
+    const formSubmitRes = await fetch(`https://formsubmit.co/ajax/support@getergowellness.com?t=${timestamp}`, {
       method: "POST",
+      cache: "no-store",
       headers: {
         "Content-Type": "application/json",
         "Accept": "application/json",
