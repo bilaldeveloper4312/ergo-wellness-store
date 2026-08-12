@@ -26,7 +26,8 @@ export async function submitContactForm(data: {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Accept": "application/json"
+        "Accept": "application/json",
+        "Referer": "https://www.getergowellness.com/"
       },
       body: JSON.stringify({
         name: data.name,
