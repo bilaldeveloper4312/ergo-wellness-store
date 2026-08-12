@@ -10,28 +10,46 @@ export default async function Home() {
   const allProducts = await getAllProducts();
   const bestSellers = allProducts.slice(0, 4);
 
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: 'ErgoWellness',
+    url: 'https://www.getergowellness.com',
+    logo: 'https://www.getergowellness.com/icon.svg',
+    description: 'Premium ergonomic desk accessories and posture correctors designed to relieve back and neck pain.',
+    contactPoint: {
+      '@type': 'ContactPoint',
+      email: 'support@getergowellness.com',
+      contactType: 'customer support'
+    }
+  };
+
   return (
     <div className="flex flex-col font-sans text-slate-800 w-full">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       
       {/* Hero Section */}
       <section className="bg-brand-light py-20 lg:py-32 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
         <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-12 relative z-10">
           <div className="lg:w-1/2 text-center lg:text-left space-y-6">
-            <span className="inline-block py-1 px-3 rounded-full bg-blue-100 text-brand-primary text-sm font-semibold tracking-wide border border-blue-200 shadow-sm">
+            <h2 className="inline-block py-1 px-3 rounded-full bg-blue-100 text-brand-primary text-sm font-semibold tracking-wide border border-blue-200 shadow-sm">
               <span className="flex items-center">
                 <svg className="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                 Physiotherapist Recommended
               </span>
-            </span>
+            </h2>
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 leading-tight">
-              Fix Your Posture, <br className="hidden sm:block"/>
+              Ergonomic Posture Correctors & <br className="hidden sm:block"/>
               <span className="text-brand-primary relative">
-                Stop The Pain.
+                Desk Accessories.
                 <svg className="absolute w-full h-3 -bottom-1 left-0 text-yellow-300 -z-10" viewBox="0 0 100 10" preserveAspectRatio="none"><path d="M0 5 Q 50 10 100 5" stroke="currentColor" strokeWidth="8" fill="none"/></svg>
               </span>
             </h1>
             <p className="text-lg md:text-xl text-slate-600 max-w-2xl mx-auto lg:mx-0">
-              Premium ergonomic solutions designed for desk workers. Alleviate neck strain and lower back pain with our clinically backed products.
+              Fix your posture and stop the pain. Alleviate neck strain and lower back pain with our clinically backed ergonomic solutions for desk workers.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 pt-6 justify-center lg:justify-start">
               <Link href="/shop" className="bg-brand-primary hover:bg-brand-dark text-white font-bold py-4 px-8 rounded-xl shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all text-center flex items-center justify-center">

@@ -21,19 +21,20 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.getergowellness.com'),
-  title: "ErgoWellness | Premium Posture & Ergonomic Solutions",
-  description: "Doctor-recommended ergonomic desk accessories and posture correctors designed to relieve back and neck pain. Shop now with free shipping in US & UK.",
-  keywords: ["posture corrector", "ergonomic chair", "neck pain relief", "standing desk", "ergonomic accessories", "back pain support"],
+  title: "ErgoWellness | Ergonomic Posture Correctors & Desk Accessories",
+  description: "Shop top-rated ergonomic desk accessories, posture correctors, and lumbar support cushions to relieve back and neck pain. Free shipping in US & UK.",
+  keywords: ["posture corrector", "ergonomic desk accessories", "neck pain relief", "lumbar support cushion", "tech neck corrector", "ergonomic posture correctors"],
   openGraph: {
-    title: "ErgoWellness | Premium Posture & Ergonomic Solutions",
-    description: "Doctor-recommended ergonomic desk accessories and posture correctors designed to relieve back and neck pain.",
+    title: "ErgoWellness | Ergonomic Posture Correctors & Desk Accessories",
+    description: "Shop top-rated ergonomic desk accessories, posture correctors, and lumbar support cushions to relieve back and neck pain.",
     url: "https://www.getergowellness.com",
     siteName: "ErgoWellness",
     images: [
       {
-        url: "/images/og-image.jpg", // We will use a placeholder or they can upload one later
+        url: "/images/og-image.jpg", 
         width: 1200,
         height: 630,
+        alt: "ErgoWellness Ergonomic Products"
       },
     ],
     locale: "en_US",
@@ -41,9 +42,12 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "ErgoWellness | Premium Posture & Ergonomic Solutions",
-    description: "Doctor-recommended ergonomic desk accessories and posture correctors.",
+    title: "ErgoWellness | Ergonomic Posture Correctors",
+    description: "Shop top-rated ergonomic desk accessories and posture correctors.",
     creator: "@ErgoWellness",
+  },
+  alternates: {
+    canonical: "https://www.getergowellness.com",
   },
 };
 
