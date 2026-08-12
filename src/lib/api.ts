@@ -113,3 +113,61 @@ export async function getProductBySlug(slug: string) {
 
   return data?.product || null;
 }
+
+// Fetch all WordPress posts
+export async function getAllPosts() {
+  const data = await fetchAPI(`
+    query AllPosts {
+      posts(first: 20) {
+        nodes {
+          id
+          title
+          slug
+          date
+          excerpt
+          featuredImage {
+            node {
+              sourceUrl
+              altText
+            }
+          }
+          categories {
+            nodes {
+              name
+            }
+          }
+        }
+      }
+    }
+  `);
+
+  return data?.posts?.nodes || [];
+}
+
+// Fetch a single post by slug
+export async function getPostBySlug(slug: string) {
+  const data = await fetchAPI(`
+    query GetPost($id: ID!) {
+      post(id: $id, idType: SLUG) {
+        id
+        title
+        slug
+        date
+        content
+        excerpt
+        featuredImage {
+          node {
+            sourceUrl
+            altText
+          }
+        }
+      }
+    }
+  `, {
+    variables: {
+      id: slug
+    }
+  });
+
+  return data?.post || null;
+}
