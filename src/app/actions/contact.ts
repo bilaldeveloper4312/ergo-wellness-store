@@ -22,7 +22,7 @@ export async function submitContactForm(data: {
     }
 
     // 2. Token is valid (human). Forward data to FormSubmit
-    const formSubmitRes = await fetch("https://formsubmit.co/ajax/5ef7a388329abf3bffad11cc18e49b8f", {
+    const formSubmitRes = await fetch("https://formsubmit.co/ajax/support@getergowellness.com", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

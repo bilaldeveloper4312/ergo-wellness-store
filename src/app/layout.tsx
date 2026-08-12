@@ -139,6 +139,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <div>
                 <h4 className="text-white font-bold mb-6 tracking-wide uppercase text-sm">Customer Support</h4>
                 <ul className="space-y-3 text-sm text-slate-400">
+                  <li><a href="mailto:support@getergowellness.com" className="hover:text-brand-primary transition-colors flex items-center"><svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg> support@getergowellness.com</a></li>
                   <li><Link href="/contact" className="hover:text-brand-primary transition-colors">Contact Us</Link></li>
                   <li><Link href="/track-order" className="hover:text-brand-primary transition-colors">Track My Order</Link></li>
                   <li><Link href="/shipping" className="hover:text-brand-primary transition-colors flex items-center">Shipping Policy</Link></li>
