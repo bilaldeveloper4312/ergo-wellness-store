@@ -1,47 +1,12 @@
 "use client";
 
-import { useState } from "react";
-import { submitContactForm } from "@/app/actions/contact";
+import { useSearchParams } from "next/navigation";
 
 export default function ContactForm() {
-  const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
-  const [errorMessage, setErrorMessage] = useState("");
+  const searchParams = useSearchParams();
+  const isSuccess = searchParams.get("success") === "true";
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    
-    setStatus("submitting");
-
-    try {
-      const form = e.currentTarget;
-      const formData = new FormData(form);
-
-      const dataObj = {
-        name: formData.get("name") as string,
-        email: formData.get("email") as string,
-        order_number: formData.get("order_number") as string,
-        message: formData.get("message") as string,
-        recaptchaToken: "disabled", // reCAPTCHA removed for reliability
-      };
-
-      // 2. Call Server Action
-      const result = await submitContactForm(dataObj);
-
-      if (result.success) {
-        setStatus("success");
-        form.reset();
-      } else {
-        setStatus("error");
-        setErrorMessage(result.error || "An error occurred.");
-      }
-    } catch (error: any) {
-      console.error("Form submission error:", error);
-      setStatus("error");
-      setErrorMessage(`Error: ${error.message || "An unexpected error occurred."}`);
-    }
-  };
-
-  if (status === "success") {
+  if (isSuccess) {
     return (
       <div className="bg-green-50 border border-green-200 text-green-800 rounded-lg p-6 text-center">
         <svg className="w-12 h-12 text-green-500 mx-auto mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -49,23 +14,23 @@ export default function ContactForm() {
         </svg>
         <h3 className="text-xl font-bold mb-2">Message Sent!</h3>
         <p>Thank you for reaching out. We will get back to you at the email provided as soon as possible.</p>
-        <button 
-          onClick={() => setStatus("idle")}
-          className="mt-4 text-brand-primary font-bold hover:underline"
+        <a 
+          href="/contact"
+          className="mt-4 inline-block text-brand-primary font-bold hover:underline"
         >
           Send another message
-        </button>
+        </a>
       </div>
     );
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      {status === "error" && (
-        <div className="bg-red-50 text-red-600 p-4 rounded-lg text-sm border border-red-200">
-          {errorMessage}
-        </div>
-      )}
+    <form action="https://formsubmit.co/support@getergowellness.com" method="POST" className="space-y-4">
+      {/* FormSubmit Configuration */}
+      <input type="hidden" name="_next" value="https://www.getergowellness.com/contact?success=true" />
+      <input type="hidden" name="_captcha" value="false" />
+      <input type="hidden" name="_subject" value="New Contact Form Submission - ErgoWellness" />
+      <input type="hidden" name="_autoresponse" value="Thank you for contacting ErgoWellness! We have received your message and will get back to you within 24 hours." />
 
       <div>
         <label className="block text-sm font-medium text-slate-700 mb-1">Name</label>
@@ -85,17 +50,9 @@ export default function ContactForm() {
       </div>
       <button 
         type="submit" 
-        disabled={status === "submitting"}
-        className="w-full bg-brand-primary hover:bg-brand-dark text-white font-bold py-3 px-4 rounded-lg transition-colors disabled:opacity-50 flex justify-center items-center"
+        className="w-full bg-brand-primary hover:bg-brand-dark text-white font-bold py-3 px-4 rounded-lg transition-colors flex justify-center items-center"
       >
-        {status === "submitting" ? (
-          <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-          </svg>
-        ) : (
-          "Send Message"
-        )}
+        Send Message
       </button>
       
       <div className="text-xs text-center text-slate-500 mt-4">
