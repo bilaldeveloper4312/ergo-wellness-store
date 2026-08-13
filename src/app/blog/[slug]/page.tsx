@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { getPostBySlug } from "@/lib/api";
+import { getPostBySlug, getAllProducts } from "@/lib/api";
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
 
@@ -28,6 +28,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 export default async function BlogPost({ params }: { params: Promise<{ slug: string }> }) {
   const resolvedParams = await params;
   const post = await getPostBySlug(resolvedParams.slug);
+  const products = await getAllProducts();
 
   if (!post) {
     notFound();
@@ -70,17 +71,38 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
           dangerouslySetInnerHTML={createMarkup(cleanContent)}
         />
         
-        {/* Shop CTA at bottom of every post */}
-        <div className="my-16 bg-brand-light p-8 rounded-2xl border border-blue-100 flex flex-col md:flex-row items-center gap-6">
-          <div className="w-32 h-32 relative flex-shrink-0 rounded-xl overflow-hidden border border-slate-200 shadow-sm bg-white">
-            <Image src="/hero-product.jpg" alt="Posture Corrector" fill style={{ objectFit: 'cover' }} />
+        {/* Dynamic Recommended Products (SEO Link Juice & Conversions) */}
+        <div className="my-16 border-t border-slate-200 pt-12">
+          <div className="flex justify-between items-end mb-8">
+            <div>
+              <h3 className="text-2xl font-bold text-slate-900">Recommended for you</h3>
+              <p className="text-slate-500 mt-1">Products mentioned in this article.</p>
+            </div>
+            <Link href="/shop" className="text-brand-primary font-bold hover:underline hidden sm:block">View all →</Link>
           </div>
-          <div>
-            <h4 className="text-xl font-bold text-slate-900 mt-0 mb-2">Ready to stop the pain?</h4>
-            <p className="text-slate-600 mb-4 text-base">Browse our premium, physiotherapist-recommended posture correctors and ergonomic desk accessories today.</p>
-            <Link href="/shop" className="inline-block bg-brand-primary text-white font-semibold py-3 px-8 rounded-xl hover:bg-brand-dark transition-colors shadow-md">
-              Shop All Solutions →
-            </Link>
+          
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+            {products.slice(0, 3).map((prod: any) => (
+              <Link href={`/shop/${prod.slug || prod.databaseId}`} key={prod.databaseId} className="group bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden hover:shadow-md transition-all flex flex-col">
+                <div className="relative aspect-square bg-slate-50">
+                  <Image 
+                    src={prod.image?.sourceUrl || "/hero-product.jpg"} 
+                    alt={prod.image?.altText || prod.name} 
+                    fill
+                    style={{ objectFit: 'cover' }}
+                    className="group-hover:scale-105 transition-transform duration-500"
+                  />
+                </div>
+                <div className="p-4 flex flex-col flex-grow">
+                  <h4 className="font-bold text-slate-900 text-sm mb-1 group-hover:text-brand-primary line-clamp-2">{prod.name}</h4>
+                  <div className="flex text-yellow-400 text-xs mb-2">★★★★★</div>
+                  <div className="mt-auto font-black text-slate-900">{prod.price ? prod.price.replace(/&nbsp;/g, ' ') : 'Free'}</div>
+                </div>
+              </Link>
+            ))}
+          </div>
+          <div className="mt-6 text-center sm:hidden">
+            <Link href="/shop" className="text-brand-primary font-bold hover:underline">View all products →</Link>
           </div>
         </div>
 
