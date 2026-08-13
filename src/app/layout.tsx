@@ -50,6 +50,11 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://www.getergowellness.com",
   },
+  verification: {
+    other: {
+      "p:domain_verify": "4f6b310bc94cd3463315134d50ca2ab2"
+    }
+  },
   icons: {
     icon: "/icon.svg",
     apple: "/icon.svg",
