@@ -43,6 +43,8 @@ export default function ProductOptions({ product }: { product: any }) {
     displayPrice = selectedVariation.price.replace(/&nbsp;/g, ' ');
   }
 
+  const [addBundle, setAddBundle] = useState(true); // Default to true to maximize conversions
+
   const handleAddToCart = () => {
     if (hasVariations && !selectedVariation) {
       alert("Please select all options before adding to cart.");
@@ -75,6 +77,19 @@ export default function ProductOptions({ product }: { product: any }) {
     };
 
     addToCart(cartItem);
+
+    // If the bundle is selected, add the complementary item to cart as well
+    if (addBundle) {
+      addToCart({
+        cartId: "bundle-posture-corrector",
+        productId: 9999, // Dummy ID for the bundle item
+        name: "Premium Posture Corrector",
+        slug: "premium-posture-corrector",
+        price: "19.99 د.إ", // Simulated discounted price
+        image: "/hero-product.jpg",
+        quantity: 1,
+      });
+    }
   };
 
   return (
@@ -103,7 +118,7 @@ export default function ProductOptions({ product }: { product: any }) {
       )}
 
       {/* YMYL Trust Badges */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8 bg-slate-50 p-4 rounded-xl border border-slate-100">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6 bg-slate-50 p-4 rounded-xl border border-slate-100">
         <div className="flex items-center space-x-3 text-slate-700">
           <svg className="w-6 h-6 text-brand-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
           <span className="font-medium text-sm">Physiotherapist Approved</span>
@@ -111,6 +126,32 @@ export default function ProductOptions({ product }: { product: any }) {
         <div className="flex items-center space-x-3 text-slate-700">
           <svg className="w-6 h-6 text-brand-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
           <span className="font-medium text-sm">30-Day Pain-Free Trial</span>
+        </div>
+      </div>
+
+      {/* Frequently Bought Together Bundle */}
+      <div className="bg-blue-50/50 border border-brand-primary/30 rounded-xl p-4 mb-6 cursor-pointer hover:bg-blue-50 transition-colors" onClick={() => setAddBundle(!addBundle)}>
+        <h4 className="font-bold text-slate-900 text-sm mb-3 flex items-center">
+          <svg className="w-4 h-4 mr-1 text-brand-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+          Frequently Bought Together
+        </h4>
+        <div className="flex items-center">
+          <div className="flex-shrink-0 mr-3">
+            <input 
+              type="checkbox" 
+              checked={addBundle} 
+              onChange={() => setAddBundle(!addBundle)}
+              className="w-5 h-5 text-brand-primary rounded focus:ring-brand-primary"
+            />
+          </div>
+          <div className="flex-1">
+            <p className="text-sm font-medium text-slate-900 line-clamp-1">Add the Premium Posture Corrector</p>
+            <div className="flex items-center mt-1">
+              <span className="text-sm font-bold text-slate-900">19.99 د.إ</span>
+              <span className="text-xs text-slate-500 line-through ml-2">39.99 د.إ</span>
+              <span className="text-xs font-bold text-red-500 ml-2">(Save 50%)</span>
+            </div>
+          </div>
         </div>
       </div>
 
