@@ -49,6 +49,10 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://www.getergowellness.com",
   },
+  icons: {
+    icon: "/icon.svg",
+    apple: "/icon.svg",
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
