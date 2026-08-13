@@ -71,6 +71,23 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
           dangerouslySetInnerHTML={createMarkup(cleanContent)}
         />
         
+        {/* Author Bio (E-E-A-T Trust Signal) */}
+        <div className="mt-16 bg-slate-50 border border-slate-200 rounded-2xl p-8 flex flex-col md:flex-row items-center md:items-start gap-6">
+          <div className="w-24 h-24 rounded-full bg-brand-primary flex-shrink-0 flex items-center justify-center text-white text-2xl font-bold shadow-md">
+            EE
+          </div>
+          <div className="text-center md:text-left">
+            <h4 className="text-xl font-bold text-slate-900 mb-2 flex items-center justify-center md:justify-start">
+              ErgoWellness Editorial Team
+              <svg className="w-5 h-5 text-blue-500 ml-2" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" /></svg>
+            </h4>
+            <p className="text-slate-600 mb-4 leading-relaxed">
+              This article was written and medically reviewed by the ErgoWellness Editorial Team, a group of ergonomic specialists dedicated to providing evidence-based posture correction advice and workspace wellness tips.
+            </p>
+            <Link href="/about" className="text-brand-primary font-bold hover:underline text-sm">Read our clinical guidelines →</Link>
+          </div>
+        </div>
+        
         {/* Dynamic Recommended Products (SEO Link Juice & Conversions) */}
         <div className="my-16 border-t border-slate-200 pt-12">
           <div className="flex justify-between items-end mb-8">

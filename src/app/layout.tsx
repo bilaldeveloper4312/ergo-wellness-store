@@ -141,6 +141,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                   <li><Link href="/shop" className="hover:text-brand-primary transition-colors">Standing Desks</Link></li>
                   <li><Link href="/shop" className="hover:text-brand-primary transition-colors">Ergonomic Chairs</Link></li>
                 </ul>
+                
+                <h4 className="text-white font-bold mt-8 mb-4 tracking-wide uppercase text-sm">Corporate Office</h4>
+                <address className="not-italic text-sm text-slate-400 space-y-1">
+                  <p>ErgoWellness Inc.</p>
+                  <p>1209 Orange Street</p>
+                  <p>Wilmington, DE 19801, USA</p>
+                </address>
               </div>
 
               {/* Customer Service & Shipping */}
@@ -148,6 +155,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 <h4 className="text-white font-bold mb-6 tracking-wide uppercase text-sm">Customer Support</h4>
                 <ul className="space-y-3 text-sm text-slate-400">
                   <li><a href="mailto:support@getergowellness.com" className="hover:text-brand-primary transition-colors flex items-center"><svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg> support@getergowellness.com</a></li>
+                  <li><Link href="/about" className="hover:text-brand-primary transition-colors">About Us</Link></li>
                   <li><Link href="/contact" className="hover:text-brand-primary transition-colors">Contact Us</Link></li>
                   <li><Link href="/track-order" className="hover:text-brand-primary transition-colors">Track My Order</Link></li>
                   <li><Link href="/shipping" className="hover:text-brand-primary transition-colors flex items-center">Shipping Policy</Link></li>
