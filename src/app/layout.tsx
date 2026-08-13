@@ -6,6 +6,7 @@ import { CartProvider } from "@/context/CartContext";
 import CartSlideout from "@/components/CartSlideout";
 import CartIcon from "@/components/CartIcon";
 import NewsletterForm from "@/components/NewsletterForm";
+import NewsletterPopup from "@/components/NewsletterPopup";
 import { GoogleAnalytics } from '@next/third-parties/google';
 import "./globals.css";
 
@@ -61,6 +62,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="min-h-screen flex flex-col bg-slate-50 font-sans">
         <CartProvider>
           <CartSlideout />
+          <NewsletterPopup />
         
         {/* Top SEO Banner / US-UK Region Toggle */}
         <div className="bg-brand-dark text-white text-xs py-2">
