@@ -10,7 +10,25 @@ import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 export default function Checkout() {
   const { cartItems, cartTotal, clearCart } = useCart();
   const [isProcessing, setIsProcessing] = useState(false);
+  const [couponCode, setCouponCode] = useState("");
+  const [discount, setDiscount] = useState(0);
+  const [couponMessage, setCouponMessage] = useState({ text: "", type: "" });
   const router = useRouter();
+
+  const handleApplyCoupon = () => {
+    if (!couponCode.trim()) return;
+    
+    if (couponCode.toUpperCase() === "WELCOME10") {
+      setDiscount(0.10); // 10% discount
+      setCouponMessage({ text: "10% discount applied successfully!", type: "success" });
+    } else {
+      setDiscount(0);
+      setCouponMessage({ text: "Invalid or expired coupon code.", type: "error" });
+    }
+  };
+
+  const discountAmount = cartTotal * discount;
+  const finalTotal = cartTotal - discountAmount;
 
   const handleCheckout = (e: React.FormEvent) => {
     e.preventDefault();
@@ -90,7 +108,7 @@ export default function Checkout() {
                         style={{ layout: "vertical", shape: "rect", color: "gold" }}
                         createOrder={(data, actions) => {
                           // Note: PayPal doesn't natively support AED, so we convert the cart total to USD (approx 3.67 AED per 1 USD)
-                          const totalUsd = (cartTotal / 3.67).toFixed(2);
+                          const totalUsd = (finalTotal / 3.67).toFixed(2);
                           return actions.order.create({
                             intent: "CAPTURE",
                             purchase_units: [
@@ -136,7 +154,8 @@ export default function Checkout() {
                               line_items: cartItems.map(item => ({
                                 product_id: item.productId,
                                 quantity: item.quantity
-                              }))
+                              })),
+                              coupon_lines: discount > 0 ? [{ code: "WELCOME10", discount: discountAmount.toString() }] : []
                             };
                             
                             try {
@@ -193,11 +212,43 @@ export default function Checkout() {
                 ))}
               </ul>
               
+              {/* Discount Code Input */}
+              <div className="py-4 border-t border-slate-100">
+                <div className="flex gap-2">
+                  <input 
+                    type="text" 
+                    placeholder="Discount code" 
+                    value={couponCode}
+                    onChange={(e) => setCouponCode(e.target.value)}
+                    className="flex-1 px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-brand-primary outline-none text-sm uppercase"
+                  />
+                  <button 
+                    type="button"
+                    onClick={handleApplyCoupon}
+                    className="bg-slate-800 text-white px-6 py-3 rounded-lg font-bold text-sm hover:bg-slate-900 transition-colors disabled:opacity-50"
+                    disabled={!couponCode.trim()}
+                  >
+                    Apply
+                  </button>
+                </div>
+                {couponMessage.text && (
+                  <p className={`text-xs mt-2 ${couponMessage.type === "success" ? "text-green-600 font-medium" : "text-red-500"}`}>
+                    {couponMessage.text}
+                  </p>
+                )}
+              </div>
+
               <div className="space-y-3 text-sm text-slate-600 mb-6 border-t border-slate-100 pt-6">
                 <div className="flex justify-between">
                   <p>Subtotal</p>
                   <p className="font-medium text-slate-900">{cartTotal.toFixed(2)} د.إ</p>
                 </div>
+                {discount > 0 && (
+                  <div className="flex justify-between text-green-600 font-medium">
+                    <p>Discount (10%)</p>
+                    <p>-{discountAmount.toFixed(2)} د.إ</p>
+                  </div>
+                )}
                 <div className="flex justify-between">
                   <p>Shipping</p>
                   <p className="font-medium text-green-600">Free</p>
@@ -206,7 +257,7 @@ export default function Checkout() {
               
               <div className="flex justify-between items-center border-t border-slate-100 pt-6">
                 <p className="text-base font-bold text-slate-900">Total</p>
-                <p className="text-2xl font-extrabold text-slate-900">{cartTotal.toFixed(2)} <span className="text-sm font-normal text-slate-500">د.إ</span></p>
+                <p className="text-2xl font-extrabold text-slate-900">{finalTotal.toFixed(2)} <span className="text-sm font-normal text-slate-500">د.إ</span></p>
               </div>
             </div>
           </div>
