@@ -142,6 +142,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                   <li><Link href="/shop" className="hover:text-brand-primary transition-colors">Lumbar Support</Link></li>
                   <li><Link href="/shop" className="hover:text-brand-primary transition-colors">Standing Desks</Link></li>
                   <li><Link href="/shop" className="hover:text-brand-primary transition-colors">Ergonomic Chairs</Link></li>
+                  <li><Link href="/ambassadors" className="hover:text-brand-primary transition-colors text-green-400 font-bold">Ambassador Program</Link></li>
                 </ul>
                 
                 <h4 className="text-white font-bold mt-8 mb-4 tracking-wide uppercase text-sm">Corporate Office</h4>
