@@ -47,9 +47,6 @@ export const metadata: Metadata = {
     description: "Shop top-rated ergonomic desk accessories and posture correctors.",
     creator: "@ErgoWellness",
   },
-  alternates: {
-    canonical: "https://www.getergowellness.com",
-  },
   verification: {
     other: {
       "p:domain_verify": "4f6b310bc94cd3463315134d50ca2ab2"
