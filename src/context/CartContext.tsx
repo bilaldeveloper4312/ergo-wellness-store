@@ -90,9 +90,9 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
   const cartCount = cartItems.reduce((total, item) => total + item.quantity, 0);
 
-  // Extract numeric price from strings like "184,00&nbsp;د.إ"
+  // Extract numeric price from strings like "$184.00"
   const cartTotal = cartItems.reduce((total, item) => {
-    // Extract numbers: e.g. "184,00" -> 184.00
+    // Extract numbers: e.g. "184.00" -> 184.00
     let numericPrice = 0;
     if (item.price) {
       const cleanStr = item.price.replace(/&nbsp;/g, ' ').replace(/[^\d.,]/g, '').replace(',', '.');

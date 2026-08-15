@@ -1,8 +1,22 @@
 import Link from "next/link";
 
+import Script from "next/script";
+
 export default function CheckoutSuccess() {
   return (
     <div className="bg-slate-50 min-h-[70vh] flex flex-col items-center justify-center p-4">
+      {/* Fire Purchase Events */}
+      <Script id="purchase-event" strategy="afterInteractive">
+        {`
+          if (typeof fbq === 'function') {
+            fbq('track', 'Purchase', {currency: 'USD', value: 0.00});
+          }
+          if (typeof ttq === 'function') {
+            ttq.track('CompletePayment', {currency: 'USD', value: 0.00});
+          }
+        `}
+      </Script>
+      
       <div className="bg-white rounded-2xl shadow-xl p-10 max-w-lg w-full text-center border-t-8 border-green-500">
         <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
           <svg className="w-10 h-10 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>

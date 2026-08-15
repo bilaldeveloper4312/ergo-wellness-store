@@ -77,7 +77,9 @@ export default async function Home() {
                  alt="Premium Posture Corrector" 
                  fill
                  priority
-                 sizes="(max-width: 1024px) 100vw, 50vw"
+                 fetchPriority="high"
+                 quality={75}
+                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                  style={{ objectFit: 'cover' }}
                  className="hover:scale-105 transition-transform duration-700"
                />
@@ -191,7 +193,7 @@ export default async function Home() {
 
       {/* Testimonial Section */}
       <section className="py-24 bg-brand-dark text-white relative overflow-hidden">
-        <div className="absolute top-0 left-0 w-full h-full opacity-10 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]"></div>
+        <div className="absolute inset-0 w-full h-full opacity-10 bg-gradient-to-br from-black/0 via-black/10 to-black/20 pointer-events-none"></div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-extrabold mb-4">Real Relief for Desk Workers</h2>

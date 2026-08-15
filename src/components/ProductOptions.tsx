@@ -85,7 +85,7 @@ export default function ProductOptions({ product }: { product: any }) {
         productId: 9999, // Dummy ID for the bundle item
         name: "Premium Posture Corrector",
         slug: "premium-posture-corrector",
-        price: "19.99 د.إ", // Simulated discounted price
+        price: "$19.99", // Simulated discounted price
         image: "/hero-product.jpg",
         quantity: 1,
       });
@@ -147,8 +147,8 @@ export default function ProductOptions({ product }: { product: any }) {
           <div className="flex-1">
             <p className="text-sm font-medium text-slate-900 line-clamp-1">Add the Premium Posture Corrector</p>
             <div className="flex items-center mt-1">
-              <span className="text-sm font-bold text-slate-900">19.99 د.إ</span>
-              <span className="text-xs text-slate-500 line-through ml-2">39.99 د.إ</span>
+              <span className="text-sm font-bold text-slate-900">$19.99</span>
+              <span className="text-xs text-slate-500 line-through ml-2">$39.99</span>
               <span className="text-xs font-bold text-red-500 ml-2">(Save 50%)</span>
             </div>
           </div>

@@ -136,7 +136,7 @@ export default function CartSlideout() {
                   <div className="border-t border-slate-100 px-4 py-6 sm:px-6 bg-slate-50">
                     <div className="flex justify-between text-base font-bold text-slate-900 mb-2">
                       <p>Subtotal</p>
-                      <p>{cartTotal.toFixed(2)} د.إ</p>
+                      <p>${cartTotal.toFixed(2)}</p>
                     </div>
                     <div className="flex justify-between text-sm text-green-600 font-medium mb-4">
                       <p>Shipping</p>
@@ -144,7 +144,7 @@ export default function CartSlideout() {
                     </div>
                     <div className="flex justify-between text-xl font-extrabold text-slate-900 mb-6 border-t border-slate-200 pt-4">
                       <p>Total</p>
-                      <p>{cartTotal.toFixed(2)} د.إ</p>
+                      <p>${cartTotal.toFixed(2)}</p>
                     </div>
                     
                     <p className="mt-0.5 text-sm text-slate-500 mb-6 text-center">Shipping and taxes calculated at checkout.</p>

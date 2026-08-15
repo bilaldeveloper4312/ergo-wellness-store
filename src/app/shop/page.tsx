@@ -1,6 +1,16 @@
 import Image from "next/image";
 import Link from "next/link";
+import { Metadata } from "next";
 import { getAllProducts } from "@/lib/api";
+
+export const metadata: Metadata = {
+  title: "Shop Ergonomic Solutions | ErgoWellness",
+  description: "Browse our curated collection of clinically backed posture correctors and ergonomic desk accessories. Find your pain-relief solution today.",
+  openGraph: {
+    title: "Shop Ergonomic Solutions | ErgoWellness",
+    description: "Browse our curated collection of clinically backed posture correctors and ergonomic desk accessories.",
+  }
+};
 
 export const revalidate = 15;
 
