@@ -142,7 +142,7 @@ export default async function ProductDetail({ params }: { params: Promise<{ slug
 
           {/* Product Reviews Section */}
           <div className="mt-16">
-            <ProductReviews />
+            <ProductReviews productSlug={product.slug} />
         </div>
 
         {/* SEO FAQ Accordion Section (People Also Ask target) */}
