@@ -107,8 +107,8 @@ export default function Checkout() {
                       <PayPalButtons 
                         style={{ layout: "vertical", shape: "rect", color: "gold" }}
                         createOrder={(data, actions) => {
-                          // Note: PayPal doesn't natively support AED, so we convert the cart total to USD (approx 3.67 AED per 1 USD)
-                          const totalUsd = (finalTotal / 3.67).toFixed(2);
+                          // Note: Store is now natively in USD, no conversion needed.
+                          const totalUsd = finalTotal.toFixed(2);
                           return actions.order.create({
                             intent: "CAPTURE",
                             purchase_units: [
